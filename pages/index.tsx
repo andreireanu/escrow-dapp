@@ -10,6 +10,7 @@ import {Address} from "@elrondnetwork/erdjs/out";
 import {querySc} from "../apis/queries";
 import {contractAddress} from "../config"; 
 import {useEffect} from "react";
+import SendList from './sendList'
 
 const Home: NextPage = () => {
     const {address, logout, env, balance, nonce} = useAuth();
@@ -26,12 +27,9 @@ const Home: NextPage = () => {
             value: 0.01,
             webReturnUrl: window.location.toString() + webWalletTxReturnPath,
         });
-
         setTxData('');
         setReceiverAddress('');
-
         console.log(txResult);
-
     };
 
     const getSend = async () => {
@@ -127,13 +125,7 @@ const Home: NextPage = () => {
                     }
                 </div>
             </div>
-        <div>
-            ${dataArr[0]}
-            <div>
-            ${dataArr[1]}
-            </div>
-            ${dataArr[2]}
-        </div>
+         <SendList data = {dataArr}></SendList>
         </RequiresAuth>
     );
 };
