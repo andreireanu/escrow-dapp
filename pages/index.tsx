@@ -73,10 +73,9 @@ const Home: NextPage = () => {
                     >
                         Logout
                     </button>
-
+                <SendList data = {dataArr}></SendList>
                 </div>
             </div>
-         <SendList data = {dataArr}></SendList>
         </RequiresAuth>
     );
 };
