@@ -4,6 +4,7 @@ import {Address} from "@elrondnetwork/erdjs/out";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
  
+ 
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -34,8 +35,19 @@ function sendElement( {record} : {record: String}) {
      
 
   return (
+    // <label>
+    // <input type="checkbox"   />
+    // ${wallet}
+    // ${token_to}
+    // ${amount_to}
+    // ${token_from}
+    // ${amount_from}
+    // </label>
+  
+ 
+
    
-    <Card>
+<Card  >
       <Card.Header >Offer for you from {wallet}</Card.Header>
       <Card.Body>
         <Card.Title> Swap {amount_to_human} {token_to} for {amount_from_human} {token_from}</Card.Title>
@@ -44,7 +56,11 @@ function sendElement( {record} : {record: String}) {
         <Button variant="primary">Accept offer</Button>
       </Card.Body>
     </Card>
-    
+
+
+ 
+  
+  
   )
 }
 

@@ -5,7 +5,6 @@ import {Provider as ReduxProvider} from "react-redux";
 import Notifications from "../components/Notifications";
 import {AuthContextProvider} from "@elrond-giants/erd-react-hooks";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
 function MyApp({Component, pageProps}: AppProps) {
     return (
         <ReduxProvider store={store}>
