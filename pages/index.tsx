@@ -123,9 +123,10 @@ const Home: NextPage = () => {
                         </form>
                     </div>
                     }
+                    <SendList data = {dataArr}> </SendList>
                 </div>
             </div>
-         <SendList data = {dataArr}></SendList>
+            
         </RequiresAuth>
     );
 };

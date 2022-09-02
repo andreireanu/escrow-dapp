@@ -1,17 +1,9 @@
 import React from 'react'
 import {Address} from "@elrondnetwork/erdjs/out"; 
 
-import { Button, CardContent, Typography } from '@material-ui/core';
-import Card from "@material-ui/core/Card";
-import CardMedia from '@mui/material/CardMedia/CardMedia';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
  
-import {
-  EuiCard,
-  EuiIcon,
-  EuiFlexGroup,
-  EuiFlexItem,
-} from '@elastic/eui';
-
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -42,40 +34,17 @@ function sendElement( {record} : {record: String}) {
      
 
   return (
-    // <label>
-    // <input type="checkbox"   />
-    // ${wallet}
-    // ${token_to}
-    // ${amount_to}
-    // ${token_from}
-    // ${amount_from}
-    // </label>
-  
-  <div>
-
-
-<EuiFlexItem key={record}>
-      <EuiCard
-        title={`Swap ${amount_to_human} ${token_to} for ${amount_from_human} ${token_from}`}
-        description={`Offer made by ${wallet}`}
-     
-      />
-    </EuiFlexItem>
-
-
-  {/* <Button variant="contained"  >
-      <Card text-gray-800 style={{backgroundColor: "coral"}} >
-      <CardContent>
-        <Typography  gutterBottom variant="h5" component="h5"> You send: {amount_to_human} {token_to}</Typography>
-        <Typography gutterBottom variant="h5" component="h5"> You receive: {amount_from_human} {token_from}  </Typography>
-        From: {wallet}
-      </CardContent>
+   
+    <Card>
+      <Card.Header >Offer for you from {wallet}</Card.Header>
+      <Card.Body>
+        <Card.Title> Swap {amount_to_human} {token_to} for {amount_from_human} {token_from}</Card.Title>
+        <Card.Text>
+        </Card.Text>
+        <Button variant="primary">Accept offer</Button>
+      </Card.Body>
     </Card>
-  </Button> */}
- 
-</div>
-  
-  
+    
   )
 }
 
