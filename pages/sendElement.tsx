@@ -49,16 +49,17 @@ function sendElement( {record} : {record: String}) {
  
     function handleCancelClick() {
       console.log('RUN')
-      let data = 'ESDTTransfer@455343312D343932663262@0de0b6b3a7640000@657363726F77@455343312D343932663262@0de0b6b3a7640000@455343322D383366656131@1bc16d674ec80000@75d4316bc2f8293cf7d2afd908966f27592ff4ddf9ce9f56b65060f8eba321da'
+      let data = 'removeOffer@455343312D343932663262@0DE0B6B3A7640000@455343322D383366656131@1BC16D674EC80000@75D4316BC2F8293CF7D2AFD908966F27592FF4DDF9CE9F56B65060F8EBA321DA'
       sendTransaction(data);
      }   
 
   return (
-    <Card style={{ width: '40rem' }}>
+    <Card style={{ width: '45rem' }}>
       <Card.Header style={{ backgroundColor : 'lightblue' }} >Offer for {wallet}</Card.Header>
       <Card.Body>
         <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> token(s) of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the smart contract </Card.Title>
-        <Card.Title> You want to receive <span style={{ color : 'DarkCyan' }} > {amount_from_human} </span> tokens of type <span style={{ color : 'DarkCyan' }} > {token_from} </span> in exchange </Card.Title>
+        <Card.Title> You will receive <span style={{ color : 'DarkCyan' }} > {amount_from_human} </span> tokens of type <span style={{ color : 'DarkCyan' }} > {token_from} </span> in exchange 
+          when the wallet you want to escrow with accepts your offer </Card.Title>
         <Card.Text>
         </Card.Text>
         <Button variant="primary" onClick={handleCancelClick}>Cancel offer</Button>

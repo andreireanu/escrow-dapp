@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
 import {useState} from "react";
 import {webWalletTxReturnPath } from '../utils/routes';
+import {contractAddress} from "../config"; 
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -22,10 +23,10 @@ function receiveElement( {record} : {record: String}) {
 
     const sendTransaction = async (data: string) => {
       const txResult = await makeTransaction({
-          receiver: wallet,
+          receiver: contractAddress,
           data: data,
           value: 0.01,
-          gasLimit: 600000,
+          gasLimit: 10000000,
           webReturnUrl: window.location.toString() + webWalletTxReturnPath,
       });
       setTxData('');
@@ -34,34 +35,38 @@ function receiveElement( {record} : {record: String}) {
 
     const hex = Buffer.from(record, 'base64').toString('hex');
     let splt = hex.replaceAll('0000000b',',').replaceAll('00000008',',').split(',');   
-    let wallet = Address.fromString(splt[0]).bech32()
-    // console.log(wallet);  
-    let token_to = hex2a(splt[1]);
-    // console.log(token_to);  
+    let wallet_hex = splt[0];
+    let wallet = Address.fromString(wallet_hex).bech32()
+    let token_to_hex = splt[1]
+    let token_to = hex2a(token_to_hex);
+    let amount_to_hex = (splt[2])
     let amount_to = parseInt(splt[2], 16);
-    // console.log(amount_to);    
-    let token_from = hex2a(splt[3]);
-    // console.log(token_from);  
+    let token_from_hex = splt[3]
+    let token_from = hex2a(token_from_hex);
+    let amount_from_hex = splt[4];
     let amount_from = parseInt(splt[4], 16);
-    // console.log(amount_from);  
     const amount_to_human = amount_to / ( Math.pow(10,18)) ;
     const amount_from_human = amount_from / ( Math.pow(10,18)) ;
  
-    function handleCancelClick() {
+    function handleAcceptClick() {
       console.log('RUN')
-      let data = 'ESDTTransfer@455343312D343932663262@0de0b6b3a7640000@657363726F77@455343312D343932663262@0de0b6b3a7640000@455343322D383366656131@1bc16d674ec80000@75d4316bc2f8293cf7d2afd908966f27592ff4ddf9ce9f56b65060f8eba321da'
+      let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
+                 '@657363726F77' + // escrow function name in hex         
+                 '@' + token_to_hex + "@" + amount_to_hex  + 
+                 '@' + token_from_hex + "@" + amount_from_hex + 
+                 '@' + wallet_hex;
       sendTransaction(data);
      }   
 
   return (
-     <Card style={{ width: '40rem' }}>
+     <Card style={{ width: '45rem' }}>
       <Card.Header style={{ backgroundColor : 'BurlyWood' }} >Offer from {wallet}</Card.Header>
       <Card.Body>
         <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> token(s) of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the smart contract </Card.Title>
-        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange </Card.Title>
+        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately </Card.Title>
         <Card.Text>
         </Card.Text>
-        <Button variant="primary" onClick={handleCancelClick}>Accept offer</Button>
+        <Button variant="primary" onClick={handleAcceptClick}>Accept offer</Button>
       </Card.Body>
     </Card>  
     
