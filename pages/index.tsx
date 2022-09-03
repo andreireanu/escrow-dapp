@@ -3,34 +3,18 @@ import RequiresAuth from "../components/RequiresAuth";
 import {useAuth} from "@elrond-giants/erd-react-hooks";
 import {egldLabel} from "../config";
 import {useState} from "react";
-import {useTransaction} from "../hooks/useTransaction";
-import {webWalletTxReturnPath} from "../utils/routes";
-
+ 
 import {Address} from "@elrondnetwork/erdjs/out";
 import {querySc} from "../apis/queries";
 import {contractAddress} from "../config"; 
 import {useEffect} from "react";
 import SendList from './sendList'
+import ReceiveList from './receiveList'
 
 const Home: NextPage = () => {
     const {address, logout, env, balance, nonce} = useAuth();
-    const [receiverAddress, setReceiverAddress] = useState('');
-    const [txData, setTxData] = useState('');
-    const {makeTransaction} = useTransaction();
-
-    const [dataArr, setData] = useState<any | null>([]);
-
-    const sendTransaction = async () => {
-        const txResult = await makeTransaction({
-            receiver: receiverAddress,
-            data: txData,
-            value: 0.01,
-            webReturnUrl: window.location.toString() + webWalletTxReturnPath,
-        });
-        setTxData('');
-        setReceiverAddress('');
-        console.log(txResult);
-    };
+    const [dataSend, setDataSend] = useState<any | null>([]);
+    const [dataReceive, setDataReceive] = useState<any | null>([]);
 
     const getSend = async () => {
         const data = await querySc(
@@ -42,7 +26,7 @@ const Home: NextPage = () => {
             });    
         if (data.data.returnData) {
             data.data.returnData.map( (record: any)  => {
-                setData(   
+                setDataSend(   
                     ( (prev: any) => {
                         return [...prev, String(record)]
                     })
@@ -57,11 +41,36 @@ const Home: NextPage = () => {
               };
         }, []);
      
+    const getReceive = async () => {
+        const data = await querySc(
+            contractAddress as string,
+            "getReceiveData",
+            {
+                args: [new Address(address!).hex()],
+                outputType: "query",
+            });    
+        if (data.data.returnData) {
+            data.data.returnData.map( (record: any)  => {
+                setDataReceive(   
+                    ( (prev: any) => {
+                        return [...prev, String(record)]
+                    })
+                )
+            });
+        };
+        };
+
+        useEffect(() => {
+            getReceive();
+            return () => {
+              };
+        }, []);
+
     return (
         <RequiresAuth>
             <div className="flex justify-center w-full mt-20">
                 <div className="flex flex-col items-start space-y-2 max-w-screen-md">
-                    <h2 className="text-xl">Hello, Elrond Next Starter Kit!</h2>
+                    <h2 className="text-xl">Welcome to Elrond Escrow ESDTs !</h2>
                     <p>Address: {address}</p>
                     <p>Balance: {balance.toDenominatedString() + egldLabel}</p>
                     <p>Nonce: {nonce}</p>
@@ -73,7 +82,8 @@ const Home: NextPage = () => {
                     >
                         Logout
                     </button>
-                <SendList data = {dataArr}></SendList>
+                <SendList data = {dataSend}></SendList>
+                <ReceiveList data = {dataReceive}></ReceiveList>
                 </div>
             </div>
         </RequiresAuth>

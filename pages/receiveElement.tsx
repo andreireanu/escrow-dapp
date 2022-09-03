@@ -15,7 +15,7 @@ function hex2a(hexx: String) {
 }
 
 
-function sendElement( {record} : {record: String}) {
+function receiveElement( {record} : {record: String}) {
 
     const {makeTransaction} = useTransaction(); 
     const [txData, setTxData] = useState('');
@@ -54,19 +54,18 @@ function sendElement( {record} : {record: String}) {
      }   
 
   return (
-    <Card style={{ width: '40rem' }}>
-      <Card.Header style={{ backgroundColor : 'lightblue' }} >Offer for {wallet}</Card.Header>
+     <Card style={{ width: '40rem' }}>
+      <Card.Header style={{ backgroundColor : 'BurlyWood' }} >Offer from {wallet}</Card.Header>
       <Card.Body>
-        <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> token(s) of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the smart contract </Card.Title>
-        <Card.Title> You want to receive <span style={{ color : 'DarkCyan' }} > {amount_from_human} </span> tokens of type <span style={{ color : 'DarkCyan' }} > {token_from} </span> in exchange </Card.Title>
+        <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> token(s) of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the smart contract </Card.Title>
+        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange </Card.Title>
         <Card.Text>
         </Card.Text>
-        <Button variant="primary" onClick={handleCancelClick}>Cancel offer</Button>
+        <Button variant="primary" onClick={handleCancelClick}>Accept offer</Button>
       </Card.Body>
-    </Card>
- 
- 
+    </Card>  
+    
   )
 }
 
-export default sendElement
+export default receiveElement
