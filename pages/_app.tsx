@@ -7,7 +7,7 @@ import {AuthContextProvider} from "@elrond-giants/erd-react-hooks";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 function MyApp({Component, pageProps}: AppProps) {
     return (
-        <ReduxProvider store={store}>
+        <ReduxProvider store={store} >
             <AuthContextProvider env={process.env.NODE_ENV === "production" ? "mainnet" : "devnet"}>
                 <Component {...pageProps} />
                 <Notifications/>

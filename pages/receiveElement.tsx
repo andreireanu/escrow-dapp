@@ -18,45 +18,44 @@ function hex2a(hexx: String) {
 
 function receiveElement( {record} : {record: String}) {
 
-    const {makeTransaction} = useTransaction(); 
-    const [txData, setTxData] = useState('');
+  const {makeTransaction} = useTransaction(); 
+  const [txData, setTxData] = useState('');
 
-    const sendTransaction = async (data: string) => {
-      const txResult = await makeTransaction({
-          receiver: contractAddress,
-          data: data,
-          value: 0.01,
-          gasLimit: 10000000,
-          webReturnUrl: window.location.toString() + webWalletTxReturnPath,
-      });
-      setTxData('');
-      console.log(txResult);
+  const sendTransaction = async (data: string) => {
+    const txResult = await makeTransaction({
+        receiver: contractAddress,
+        data: data,
+        value: 0.01,
+        gasLimit: 10000000,
+        webReturnUrl: window.location.toString() + webWalletTxReturnPath,
+    });
+    setTxData('');
+    console.log(txResult);
   };
 
-    const hex = Buffer.from(record, 'base64').toString('hex');
-    let splt = hex.replaceAll('0000000b',',').replaceAll('00000008',',').split(',');   
-    let wallet_hex = splt[0];
-    let wallet = Address.fromString(wallet_hex).bech32()
-    let token_to_hex = splt[1]
-    let token_to = hex2a(token_to_hex);
-    let amount_to_hex = (splt[2])
-    let amount_to = parseInt(splt[2], 16);
-    let token_from_hex = splt[3]
-    let token_from = hex2a(token_from_hex);
-    let amount_from_hex = splt[4];
-    let amount_from = parseInt(splt[4], 16);
-    const amount_to_human = amount_to / ( Math.pow(10,18)) ;
-    const amount_from_human = amount_from / ( Math.pow(10,18)) ;
+  const hex = Buffer.from(record, 'base64').toString('hex');
+  let splt = hex.replaceAll('0000000b',',').replaceAll('00000008',',').split(',');   
+  let wallet_hex = splt[0];
+  let wallet = Address.fromString(wallet_hex).bech32()
+  let token_to_hex = splt[1]
+  let token_to = hex2a(token_to_hex);
+  let amount_to_hex = (splt[2])
+  let amount_to = parseInt(splt[2], 16);
+  let token_from_hex = splt[3]
+  let token_from = hex2a(token_from_hex);
+  let amount_from_hex = splt[4];
+  let amount_from = parseInt(splt[4], 16);
+  const amount_to_human = amount_to / ( Math.pow(10,18)) ;
+  const amount_from_human = amount_from / ( Math.pow(10,18)) ;
  
-    function handleAcceptClick() {
-      console.log('RUN')
-      let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
-                 '@657363726F77' + // escrow function name in hex         
-                 '@' + token_to_hex + "@" + amount_to_hex  + 
-                 '@' + token_from_hex + "@" + amount_from_hex + 
-                 '@' + wallet_hex;
-      sendTransaction(data);
-     }   
+  function handleAcceptClick() {
+    let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
+                '@657363726F77' + // escrow function name in hex         
+                '@' + token_to_hex + "@" + amount_to_hex  + 
+                '@' + token_from_hex + "@" + amount_from_hex + 
+                '@' + wallet_hex;
+    sendTransaction(data);
+    }   
 
   return (
      <Card style={{ width: '45rem' }}>
@@ -69,7 +68,6 @@ function receiveElement( {record} : {record: String}) {
         <Button variant="primary" onClick={handleAcceptClick}>Accept offer</Button>
       </Card.Body>
     </Card>  
-    
   )
 }
 

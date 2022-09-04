@@ -67,7 +67,12 @@ const Home: NextPage = () => {
         }, []);
 
     return (
-        <RequiresAuth>
+        <RequiresAuth  >
+            <style jsx global>{`
+                body {
+                    background: ${"Snow"};
+                }
+                `}</style>
             <div className="flex justify-center w-full mt-20">
                 <div className="flex flex-col items-start space-y-2 max-w-screen-md">
                     <h2 className="text-xl">Welcome to Elrond Escrow ESDTs !</h2>
