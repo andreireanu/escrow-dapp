@@ -1,7 +1,7 @@
 import React from 'react'
 import {Address} from "@elrondnetwork/erdjs/out"; 
 import {ContractFunction} from "@elrondnetwork/erdjs/out"; 
-import { AddressValue, BigUIntValue, BytesValue, TypedValue, U16Value, U64Value, TokenIdentifierValue, IAddress } from "@elrondnetwork/erdjs/out";
+import { AddressValue, BigUIntValue, TokenIdentifierValue } from "@elrondnetwork/erdjs/out";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
@@ -29,13 +29,14 @@ function sendElement( {record} : {record: String}) {
     let amount_to = parseInt(splt[2], 16);
     let token_from = hex2a(splt[3]);
     let amount_from = parseInt(splt[4], 16);
-    const amount_to_human = amount_to / ( Math.pow(10,18)) ;
+    const amount_to_human = amount_to
+     / ( Math.pow(10,18)) ;
     const amount_from_human = amount_from / ( Math.pow(10,18)) ;
   
     const sendTransaction = async () => {
     await makeTransaction({
       receiver: contractAddress,
-      gasLimit: 5000000,
+      gasLimit: 5150000,
       data: 
         TransactionPayload.contractCall()
         .setFunction(new ContractFunction("removeOffer"))

@@ -10,6 +10,7 @@ import {contractAddress} from "../config";
 import {useEffect} from "react";
 import SendList from './sendList'
 import ReceiveList from './receiveList'
+import CreateOffer from './createOffer'
 
 const Home: NextPage = () => {
     const {address, logout, env, balance, nonce} = useAuth();
@@ -60,11 +61,11 @@ const Home: NextPage = () => {
         };
         };
 
-        useEffect(() => {
-            getReceive();
-            return () => {
-              };
-        }, []);
+    useEffect(() => {
+        getReceive();
+        return () => {
+        };
+    });
 
     return (
         <RequiresAuth  >
@@ -87,6 +88,7 @@ const Home: NextPage = () => {
                     >
                         Logout
                     </button>
+                <CreateOffer address={address}></CreateOffer>
                 <SendList data = {dataSend}></SendList>
                 <ReceiveList data = {dataReceive}></ReceiveList>
                 </div>
