@@ -4,16 +4,19 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { useLayoutEffect } from "react";
 import { network  } from "../config"; 
-import { dateFormatAliases } from '@elastic/eui';
+import divide from 'divide-bigint'
+import * as NumericInput from "react-numeric-input"; 
+import Button from 'react-bootstrap/Button';
 
-function dropdown({address} : {address: any}) {
+function dropdown(props: { display_max: String; address:any })  {
 
     const tokens = [
         { name: 'ESC1-492f2b',   unavailable: false },
         { name: 'ESC2-83fea1' ,   unavailable: false },
       ]
     const [selected, setSelected] = useState()
-    const [balance, setBalance] = useState()
+    const [balance, setBalance] = useState(0)
+    const [balanceHuman, setBalanceHuman] = useState(0)
 
     const isMounted = useRef(false);
     useLayoutEffect(() => {
@@ -22,31 +25,28 @@ function dropdown({address} : {address: any}) {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         };
-        // let response:any;
-        fetch(network['apiAddress'] + '/accounts/' + address + '/tokens/' + selected['name'], requestOptions)
+        
+        fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['name'], requestOptions)
             .then(response => response.json())
             .then(data => {
-              // response = data;
-              let value = BigInt(data['balance']) / ( Math.pow(10,18))
+              console.log(data['balance'])
+              let value:  number = divide(BigInt(data['balance']), Math.pow(10,18));
               console.log(value)
-              })
-        //     .then(() => console.log(response))
-        // let value = BigInt(response['balance'])
-        // console.log(value)
-
-
+              setBalance(data['balance'])
+              setBalanceHuman(value)
+              console.log(balance)
+              });
         } else {
         isMounted.current = true;
       }
       },[selected] );
 
+ 
 
-
-      
   return (
-    <Listbox style={{width: '20rem'}} value={selected} onChange={setSelected}>
-    <div className="relative mt-1">
-      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+    <Listbox style={{width: '20rem',  }} value={selected} onChange={setSelected}>
+    <div  className="relative mt-1">
+      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm" >
         {/* <span className="block truncate">{selected.name}</span> */}
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <SelectorIcon
@@ -94,9 +94,17 @@ function dropdown({address} : {address: any}) {
           ))}
         </Listbox.Options>
       </Transition>
+      <div style={{padding: '10px'}} >
+        <NumericInput style={ false }  className="form-control"    min={0} max={balanceHuman} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between" }}  className={'homeClasses'} >
+         <Button style={{ display : props.display_max}}variant="primary"> Max </Button> 
+         <div>Balance: {balanceHuman.toFixed(2)}</div>
+      </div>
     </div>
   </Listbox>
   )
+
 }
 
 export default dropdown
