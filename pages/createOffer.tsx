@@ -21,7 +21,7 @@ function createOffer( {address} : {address: any}) {
             <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;Make offer for: </Card.Title>
             <Form>
                 <Form.Field style={{ paddingLeft: '5.0rem', marginTop: '0rem' }}  >
-                    <input style={{width: '33.5rem', height: '2.4rem', borderColor: 'lightGray', borderWidth: 1, borderRadius: '4px' }} minLength={62} maxLength={62} width={32} placeholder='Enter Address' />
+                    <input style={{width: '33.5rem', height: '2.4rem', borderColor: 'lightGray', borderWidth: 1, borderRadius: '4px' }} minLength={62} maxLength={62} width={32} placeholder='&nbsp;Enter Address' />
                 </Form.Field>
                 </Form>
             </Card.Body>

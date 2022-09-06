@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useState, Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
@@ -8,6 +8,7 @@ import divide from 'divide-bigint'
 import Button from 'react-bootstrap/Button';
 // import * as NumericInput from "react-numeric-input";
 import InputNumber from 'rc-input-number';
+import ReactDOM from 'react-dom';
 
 function dropdown(props: { display_max: String; address:any; enforce_max: Boolean })  {
 
@@ -16,33 +17,36 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
         { name: 'ESC2-83fea1' ,   unavailable: false },
       ]
     const [selected, setSelected] = useState()
-    const [balance, setBalance] = useState(9999999999999999999999)
-    const [balanceHuman, setBalanceHuman] = useState(9999999999999999999999)
+    const [balance, setBalance] = useState(0)
+    const [balanceHuman, setBalanceHuman] = useState(0)
     const [value, setValue] = useState(0)
     const [valueHuman, setValueHuman] = useState(0)
-
-    // const isMounted = useRef(false);
-    // useLayoutEffect(() => {
-    //   if (isMounted.current) {
-    //     const requestOptions = {
-    //       method: 'GET',
-    //       headers: { 'Content-Type': 'application/json' },
-    //     };
+    let el2: any;  
+    
+    
+    const ref = useRef(null);
+    const isMounted = useRef(false);
+    useLayoutEffect(() => {
+      if (isMounted.current) {
+        const requestOptions = {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        };
         
-    //     fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['name'], requestOptions)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //           console.log(data['balance'])
-    //           let value:  number = divide(BigInt(data['balance']), Math.pow(10,18));
-    //           console.log(value)
-    //           setBalance(data['balance'])
-    //           setBalanceHuman(value)
-    //           console.log(balance)
-    //           });
-    //     } else {
-    //     isMounted.current = true;
-    //   }
-    //   },[selected] );
+        fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['name'], requestOptions)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data['balance'])
+              let value:  number = divide(BigInt(data['balance']), Math.pow(10,18));
+              console.log(value)
+              setBalance(data['balance'])
+              setBalanceHuman(value)
+              console.log(balance)
+              });
+        } else {
+        isMounted.current = true;
+      }
+      },[selected] );
 
     function onHandleChange(valueHuman: number) {
       let tempValue = valueHuman * Math.pow(10,18);
@@ -58,10 +62,17 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
       console.log('value: ' + value);
       console.log('valueHuman: ' + valueHuman);
     }
-
+ 
     function onHandleMax() {
-      console.log('Handle Max');
+      setValue(balance);
+      setValueHuman(balanceHuman);
     }
+
+    useEffect(() => {
+      ref.current.value = balanceHuman;
+  }, [value])
+
+ 
 
   return (
     <Listbox style={{width: '14.5rem'}} value={selected} onChange={setSelected}>
@@ -115,10 +126,10 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
         </Listbox.Options>
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
-        <InputNumber onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={false? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } />                
+        <InputNumber ref={ref} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } />                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}  >
-         <Button style={{ display : props.display_max}}  onClick = {onHandleMax}variant="primary"> Max </Button> 
+         <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
       {value} {valueHuman}
