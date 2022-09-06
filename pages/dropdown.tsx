@@ -4,47 +4,67 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { useLayoutEffect } from "react";
 import { network  } from "../config"; 
-import divide from 'divide-bigint'
-import * as NumericInput from "react-numeric-input"; 
+import divide from 'divide-bigint' 
 import Button from 'react-bootstrap/Button';
+// import * as NumericInput from "react-numeric-input";
+import InputNumber from 'rc-input-number';
 
-function dropdown(props: { display_max: String; address:any })  {
+function dropdown(props: { display_max: String; address:any; enforce_max: Boolean })  {
 
     const tokens = [
         { name: 'ESC1-492f2b',   unavailable: false },
         { name: 'ESC2-83fea1' ,   unavailable: false },
       ]
     const [selected, setSelected] = useState()
-    const [balance, setBalance] = useState(0)
-    const [balanceHuman, setBalanceHuman] = useState(0)
+    const [balance, setBalance] = useState(9999999999999999999999)
+    const [balanceHuman, setBalanceHuman] = useState(9999999999999999999999)
+    const [value, setValue] = useState(0)
+    const [valueHuman, setValueHuman] = useState(0)
 
-    const isMounted = useRef(false);
-    useLayoutEffect(() => {
-      if (isMounted.current) {
-        const requestOptions = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        };
+    // const isMounted = useRef(false);
+    // useLayoutEffect(() => {
+    //   if (isMounted.current) {
+    //     const requestOptions = {
+    //       method: 'GET',
+    //       headers: { 'Content-Type': 'application/json' },
+    //     };
         
-        fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['name'], requestOptions)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data['balance'])
-              let value:  number = divide(BigInt(data['balance']), Math.pow(10,18));
-              console.log(value)
-              setBalance(data['balance'])
-              setBalanceHuman(value)
-              console.log(balance)
-              });
-        } else {
-        isMounted.current = true;
-      }
-      },[selected] );
+    //     fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['name'], requestOptions)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //           console.log(data['balance'])
+    //           let value:  number = divide(BigInt(data['balance']), Math.pow(10,18));
+    //           console.log(value)
+    //           setBalance(data['balance'])
+    //           setBalanceHuman(value)
+    //           console.log(balance)
+    //           });
+    //     } else {
+    //     isMounted.current = true;
+    //   }
+    //   },[selected] );
 
- 
+    function onHandleChange(valueHuman: number) {
+      let tempValue = valueHuman * Math.pow(10,18);
+      console.log('temp value: ' + tempValue);
+      if (tempValue > balance) {
+        setValue(balance);
+        setValueHuman(balanceHuman);
+      } else {
+        console.log('HERE');
+        setValue(tempValue);
+        setValueHuman(valueHuman);
+      }
+      console.log('value: ' + value);
+      console.log('valueHuman: ' + valueHuman);
+    }
+
+    function onHandleMax() {
+      console.log('Handle Max');
+    }
 
   return (
-    <Listbox style={{width: '20rem',  }} value={selected} onChange={setSelected}>
+    <Listbox style={{width: '14.5rem'}} value={selected} onChange={setSelected}>
     <div  className="relative mt-1">
       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm" >
         {/* <span className="block truncate">{selected.name}</span> */}
@@ -94,13 +114,14 @@ function dropdown(props: { display_max: String; address:any })  {
           ))}
         </Listbox.Options>
       </Transition>
-      <div style={{padding: '10px'}} >
-        <NumericInput style={ false }  className="form-control"    min={0} max={balanceHuman} />
+      <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
+        <InputNumber onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={false? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } />                
       </div>
-      <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between" }}  className={'homeClasses'} >
-         <Button style={{ display : props.display_max}}variant="primary"> Max </Button> 
-         <div>Balance: {balanceHuman.toFixed(2)}</div>
+      <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}  >
+         <Button style={{ display : props.display_max}}  onClick = {onHandleMax}variant="primary"> Max </Button> 
+         <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
+      {value} {valueHuman}
     </div>
   </Listbox>
   )
