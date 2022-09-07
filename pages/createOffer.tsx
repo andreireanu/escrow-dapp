@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 function createOffer( {address} : {address: any}) {
 
     const [sendAddress, setSendAddress] = useState('');
+    const [validAddress, setValidAddress] = useState('none');
 
     function onChangeAddress(sendAddress: String) {
         console.log("AAA : " + sendAddress );
@@ -15,7 +16,25 @@ function createOffer( {address} : {address: any}) {
     }
 
     function onSubmit(){
+        
         console.log("BBB : " + sendAddress);
+        console.log(typeof sendAddress);
+ 
+        const regex = /erd1/g ;
+        const found = sendAddress.match(regex);
+        const addressLength = sendAddress.length
+        console.log(addressLength);
+        console.log(String(found));
+
+        if (String(found) === 'erd1' && sendAddress.length == 62){
+            console.log('OK');
+            setValidAddress('none');
+        } else 
+        {
+            console.log('NOT OK');
+            setValidAddress('inline');
+        }
+
     }
 
     return (
@@ -32,10 +51,16 @@ function createOffer( {address} : {address: any}) {
                 </Card.Title>  
             </Card.Body>
             <Card.Body>
-            <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;Make offer for: </Card.Title>
+
+            <div style={{ display: 'flex',  width: '38.5rem', flexDirection: "row", justifyContent: "space-between"}}>
+                <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;Make offer for: </Card.Title>
+                <div style={{ display : validAddress, color: 'red'}}> Invalid address </div>
+            </div>
+
+
             <Form>
                 <Form.Field style={{ paddingLeft: '5.0rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={e => onChangeAddress(e.target.value)}   >
-                    <input style={{width: '33.5rem', height: '2.4rem', borderColor: 'lightGray', borderWidth: 1, borderRadius: '4px' }}  width={32} placeholder='&nbsp;Enter Address' />
+                    <input style={{ width: '33.5rem', height: '2.4rem', borderWidth: 1, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='&nbsp;Enter Address' />
                 </Form.Field>
             </Form>
             </Card.Body>
