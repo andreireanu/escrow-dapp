@@ -6,11 +6,12 @@ import { useLayoutEffect } from "react";
 import { network  } from "../config"; 
 import divide from 'divide-bigint' 
 import Button from 'react-bootstrap/Button';
-// import * as NumericInput from "react-numeric-input";
 import InputNumber from 'rc-input-number';
-import ReactDOM from 'react-dom';
 
 function dropdown(props: { display_max: String; address:any; enforce_max: Boolean })  {
+
+    console.log(props.enforce_max);
+
 
     const tokens = [
         { name: 'ESC1-492f2b',   unavailable: false },
@@ -21,7 +22,6 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
     const [balanceHuman, setBalanceHuman] = useState(0)
     const [value, setValue] = useState(0)
     const [valueHuman, setValueHuman] = useState(0)
-    let el2: any;  
     
     
     const ref = useRef(null);
@@ -49,20 +49,21 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
       },[selected] );
 
     function onHandleChange(valueHuman: number) {
-      let tempValue = valueHuman * Math.pow(10,18);
-      console.log('temp value: ' + tempValue);
-      if (tempValue > balance) {
-        setValue(balance);
-        setValueHuman(balanceHuman);
-      } else {
-        console.log('HERE');
-        setValue(tempValue);
-        setValueHuman(valueHuman);
+      if (props.enforce_max == true) {
+        let tempValue = valueHuman * Math.pow(10,18);
+        console.log('temp value: ' + tempValue);
+        if (tempValue > balance) {
+          setValue(balance);
+          setValueHuman(balanceHuman);
+        } else {
+          console.log('HERE');
+          setValue(tempValue);
+          setValueHuman(valueHuman);
+        }
+        console.log('value: ' + value);
+        console.log('valueHuman: ' + valueHuman);
       }
-      console.log('value: ' + value);
-      console.log('valueHuman: ' + valueHuman);
     }
- 
     function onHandleMax() {
       setValue(balance);
       setValueHuman(balanceHuman);
@@ -126,13 +127,13 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
         </Listbox.Options>
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
-        <InputNumber ref={ref} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } />                
+        <InputNumber ref={ref} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}  >
          <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
-      {value} {valueHuman}
+      {/* {value} {valueHuman} */}
     </div>
   </Listbox>
   )
