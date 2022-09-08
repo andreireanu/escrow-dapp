@@ -8,16 +8,15 @@ import divide from 'divide-bigint'
 import Button from 'react-bootstrap/Button';
 import InputNumber from 'rc-input-number';
 
-function dropdown(props: { display_max: String; address:any; enforce_max: Boolean })  {
+function dropdown( props: { display_max: String; address:any; enforce_max: Boolean, handleCallback: any, selected_token: String })  {
 
-    console.log(props.enforce_max);
-
+    console.log('TEST: ' + props.selected_token);
 
     const tokens = [
-        { name: 'ESC1-492f2b',   unavailable: false },
-        { name: 'ESC2-83fea1' ,   unavailable: false },
+        { name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false },
+        { name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false },
       ]
-    const [selected, setSelected] = useState()
+    const [selected, setSelected] = useState('')
     const [balance, setBalance] = useState(0)
     const [balanceHuman, setBalanceHuman] = useState(0)
     const [value, setValue] = useState(0)
@@ -33,15 +32,12 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
           headers: { 'Content-Type': 'application/json' },
         };
         
-        fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['name'], requestOptions)
+        fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['full_name'], requestOptions)
             .then(response => response.json())
             .then(data => {
-              console.log(data['balance'])
               let value:  number = divide(BigInt(data['balance']), Math.pow(10,18));
-              console.log(value)
               setBalance(data['balance'])
               setBalanceHuman(value)
-              console.log(balance)
               });
         } else {
         isMounted.current = true;
@@ -49,23 +45,21 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
       },[selected] );
 
     function onHandleChange(valueHuman: number) {
-      if (props.enforce_max == true) {
-        let tempValue = valueHuman * Math.pow(10,18);
-        console.log('temp value: ' + tempValue);
-        if (tempValue > balance) {
-          setValue(balance);
-          setValueHuman(balanceHuman);
-        } else {
-          console.log('HERE');
-          setValue(tempValue);
-          setValueHuman(valueHuman);
-        }
-        console.log('value: ' + value);
-        console.log('valueHuman: ' + valueHuman);
+      let tempValue = valueHuman * Math.pow(10,18);
+      if (tempValue > balance && props.enforce_max == true) {
+        setValue(balance);
+        setValueHuman(balanceHuman);
+      } else {
+        setValue(tempValue);
+        setValueHuman(valueHuman);
       }
+      props.passData([value, selected.full_name]);
+      
+
     }
     function onHandleMax() {
       setValue(balance);
+      props.passData(balance);
       setValueHuman(balanceHuman);
     }
 
@@ -74,12 +68,10 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
   }, [value])
 
  
-
   return (
     <Listbox style={{width: '14.5rem'}} value={selected} onChange={setSelected}>
     <div  className="relative mt-1">
       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm" >
-        {/* <span className="block truncate">{selected.name}</span> */}
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <SelectorIcon
             className="h-5 w-5 text-gray-400"
@@ -133,7 +125,7 @@ function dropdown(props: { display_max: String; address:any; enforce_max: Boolea
          <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
-      {/* {value} {valueHuman} */}
+      {value} {valueHuman}
     </div>
   </Listbox>
   )
