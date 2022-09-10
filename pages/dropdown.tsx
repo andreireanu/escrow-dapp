@@ -8,17 +8,23 @@ import divide from 'divide-bigint'
 import Button from 'react-bootstrap/Button';
 import InputNumber from 'rc-input-number';
 
+import Image from 'next/image'
+
+import aero from '../tokens/aero.png'
+ 
+
+
 function dropdown( props: { display_max: String; address:any; enforce_max: Boolean, handleCallback: any, selected_token: String })  {
 
     let unavailable_token = String(props.selected_token).split(',')[1];
     console.log(unavailable_token);
 
     const tokens = [
-        { name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false },
-        { name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false},
-        { name: 'ESC3', full_name : 'ESC3-33fea1', unavailable: false },
-        { name: 'ESC4', full_name : 'ESC4-44fea1', unavailable: false },
-        { name: 'ESC5', full_name : 'ESC5-55fea1', unavailable: false },
+        { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false },
+        { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false},
+        { id: 3, name: 'ESC3', full_name : 'ESC3-33fea1', unavailable: false },
+        { id: 4, name: 'ESC4', full_name : 'ESC4-44fea1', unavailable: false },
+        { id: 5, name: 'ESC5', full_name : 'ESC5-55fea1', unavailable: false },
       ]
 
     let foundIndex = tokens.findIndex(element => element.full_name === unavailable_token);
@@ -104,38 +110,40 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           {tokens.map((token, tokenIdx) => (
             <Listbox.Option
               key={tokenIdx}
-              className={({ active }) =>
-                `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                  active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
+              className={({ active   }) =>
+                `relative cursor-default select-none py-1 pl-1 pr-20 ${
+                  active ? 'bg-green-300' : 'text-gray-900'
                 }`
               }
               value={token} 
               disabled={token.unavailable}
-              color='red'
+       
             >
-              {({ selected }) => (
+              {({ selected  }) => (
                 <>
-                  <span
+                  <span style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", alignItems: "center"}}
                     className={`block truncate ${
                       selected ? 'font-medium' : 'font-normal'
                     }`}
-                  >
-                    {token.name}
+                   >
+                   <Image
+                          src={aero}
+                          width={40} 
+                          height={40}  
+                    />
+                    <div>
+                      {token.name}
+                      </div>
                   </span>
-                  {selected ? (
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                  ) : null}
                 </>
               )}
             </Listbox.Option>
           ))}
-        </Listbox.Options>
+        </Listbox.Options>  
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
         <InputNumber ref={ref} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
@@ -146,7 +154,9 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       </div>
       {value} {valueHuman}
     </div>
+
   </Listbox>
+  
   )
 
 }

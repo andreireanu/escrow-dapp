@@ -39,7 +39,7 @@ function createOffer( {address} : {address: any}) {
     return (
         <>
         <Card style={{ width: '45rem', height: '25rem' }} >
-        <Card.Header style={{ backgroundColor: 'lightgreen' }} >Create offer  </Card.Header>
+        <Card.Header style={{ backgroundColor: "#86EFAC" }} >Create offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
                 <Card.Title>&nbsp;&nbsp;Swap From:  
