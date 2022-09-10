@@ -10,9 +10,11 @@ import InputNumber from 'rc-input-number';
 
 import Image from 'next/image'
 
-import aero from '../tokens/aero.png'
+import ESC1 from '../tokens/ESC1-492f2b.png'
  
-
+const myLoader = ({ src }) => {
+  return `/tokens/${src}.png`
+}
 
 function dropdown( props: { display_max: String; address:any; enforce_max: Boolean, handleCallback: any, selected_token: String })  {
 
@@ -20,11 +22,11 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     console.log(unavailable_token);
 
     const tokens = [
-        { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false },
-        { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false},
-        { id: 3, name: 'ESC3', full_name : 'ESC3-33fea1', unavailable: false },
-        { id: 4, name: 'ESC4', full_name : 'ESC4-44fea1', unavailable: false },
-        { id: 5, name: 'ESC5', full_name : 'ESC5-55fea1', unavailable: false },
+        { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
+        { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png'},
+        { id: 3, name: 'ESC3', full_name : 'ESC3-33fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
+        { id: 4, name: 'ESC4', full_name : 'ESC4-44fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
+        { id: 5, name: 'ESC5', full_name : 'ESC5-55fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
       ]
 
     let foundIndex = tokens.findIndex(element => element.full_name === unavailable_token);
@@ -115,7 +117,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
             <Listbox.Option
               key={tokenIdx}
               className={({ active   }) =>
-                `relative cursor-default select-none py-1 pl-1 pr-20 ${
+                `relative cursor-default select-none py-2 pr-20 ${
                   active ? 'bg-green-300' : 'text-gray-900'
                 }`
               }
@@ -130,11 +132,12 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
                       selected ? 'font-medium' : 'font-normal'
                     }`}
                    >
-                   <Image
-                          src={aero}
-                          width={40} 
-                          height={40}  
-                    />
+                    <Image
+                          loader={myLoader}
+                          src = {token.full_name}
+                          width={40}
+                          height={40}
+                        />
                     <div>
                       {token.name}
                       </div>
