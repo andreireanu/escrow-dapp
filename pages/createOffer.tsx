@@ -6,8 +6,9 @@ import Button from 'react-bootstrap/Button';
 
 function createOffer( {address} : {address: any}) {
 
-    const [sendAddress, setSendAddress] = useState('');
     const [validAddress, setValidAddress] = useState('none');
+    const [validData, setValidData] = useState('none');
+    const [sendAddress, setSendAddress] = useState('');
     const [sendData, setSendData] = useState('');
     const [receiveData, setReceiveData] = useState('');
 
@@ -21,6 +22,20 @@ function createOffer( {address} : {address: any}) {
 
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
+            console.log(sendAddress);
+            console.log(sendData[0]);
+            console.log(receiveData[0]);
+            console.log(sendData[1]);
+            console.log(receiveData[1]);
+            if (sendData[0] === '0' || receiveData[0] === '0' ||
+                sendData[0] === 0 || receiveData[0] === 0 ||
+                sendData[1] === undefined || receiveData[1] === undefined)
+                {
+                    setValidData('inline');
+                } else 
+                {
+                    setValidData('none'); 
+                }
         } else 
         {
             setValidAddress('inline');
@@ -29,16 +44,18 @@ function createOffer( {address} : {address: any}) {
 
     const passDataSend = (data) => {
         setSendData(data);
+        console.log(sendData);
       };
     
     const passDataReceive = (data) => {
         setReceiveData(data);
+        console.log(receiveData);
       };
 
 
     return (
         <>
-        <Card style={{ width: '45rem', height: '25rem' }} >
+        <Card style={{ width: '45rem', height: '26rem' }} >
         <Card.Header style={{ backgroundColor: "#86EFAC" }} >Create offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
@@ -53,6 +70,7 @@ function createOffer( {address} : {address: any}) {
             <div style={{ display: 'flex',  width: '38.5rem', flexDirection: "row", justifyContent: "space-between"}}>
                 <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;Make offer for: </Card.Title>
                 <div style={{ display : validAddress, color: 'red'}}> Invalid address </div>
+                <div style={{ display : validData, color: 'red'}}> Please check missing swap data </div>
             </div>
             <Form>
                 <Form.Field style={{ paddingLeft: '5.0rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={e => onChangeAddress(e.target.value)}   >
