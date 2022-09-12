@@ -38,43 +38,53 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     const [value, setValue] = useState(0)
     const [valueHuman, setValueHuman] = useState(0)
     
-    
     const ref = useRef();
     const isMounted = useRef(false);
     useLayoutEffect(() => {
+      if (props.enforce_max) {
       if (isMounted.current) {
+        setValueHuman(0);
         const requestOptions = {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         };
-        
         fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['full_name'], requestOptions)
-            .then(response => response.json())
+            .then( (response) => 
+            { 
+              if (!response.ok)  
+                {
+                  console.log(response.status);
+                  if(response.status === 404) {
+                  return Promise.reject('error 404')
+                }
+              }
+              return response.json();
+            })
             .then(data => {
               if (data['balance']) {
-                let value: number = divide(BigInt(data['balance']), Math.pow(10,18));
+                let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,18));
                 setBalance(data['balance'])
-                setBalanceHuman(value)
+                setBalanceHuman(tempValue)
               } else {
                 setBalance(0);
                 setBalanceHuman(0);
               }
+              }).catch(function() {
+                console.log('Error Fetching Data');
               });
         } else {
         isMounted.current = true;
       }
-      },[selected] );
+      }},[selected]);
 
     function onHandleChange(valueHuman: number) {
       let tempValue = valueHuman * Math.pow(10,18);
       if (tempValue >= balance && props.enforce_max == true) {
         setValue(balance);
         setValueHuman(balanceHuman);
-        console.log('MAX');
       } else {
         setValue(tempValue);
         setValueHuman(valueHuman);
-        console.log('NOT MAX');
       }
     }
     
@@ -82,13 +92,10 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       // console.log('MAX: ' + balance);
       let tempValue: number = divide(BigInt(balance), Math.pow(10,18));
       console.log('Comparing ' + tempValue + ' with ' + valueHuman);
-      // if (tempValue !== valueHuman)
-        // {
-          setValue(balance);
-          // console.log('MAX HUMAN: ' + tempValue);
-          setValueHuman(tempValue);
-          console.log('AFTER MODIF: ' + valueHuman);
-        // }
+      setValue(balance);
+      // console.log('MAX HUMAN: ' + tempValue);
+      setValueHuman(tempValue);
+      console.log('AFTER MODIF: ' + valueHuman);
     }
 
     useEffect(() => {
@@ -173,6 +180,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
          <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
+      {value} {valueHuman}
     </div>
 
   </Listbox>
