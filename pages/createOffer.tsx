@@ -44,14 +44,11 @@ function createOffer( {address} : {address: any}) {
 
     const passDataSend = (data) => {
         setSendData(data);
-        console.log(sendData);
       };
     
     const passDataReceive = (data) => {
         setReceiveData(data);
-        console.log(receiveData);
       };
-
 
     return (
         <>

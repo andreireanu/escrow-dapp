@@ -29,8 +29,7 @@ function sendElement( {record} : {record: String}) {
     let amount_to = parseInt(splt[2], 16);
     let token_from = hex2a(splt[3]);
     let amount_from = parseInt(splt[4], 16);
-    const amount_to_human = amount_to
-     / ( Math.pow(10,18)) ;
+    const amount_to_human = amount_to / ( Math.pow(10,18)) ;
     const amount_from_human = amount_from / ( Math.pow(10,18)) ;
   
     const sendTransaction = async () => {

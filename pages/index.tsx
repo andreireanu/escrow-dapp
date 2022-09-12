@@ -42,6 +42,7 @@ const Home: NextPage = () => {
               };
         }, []);
      
+
     const getReceive = async () => {
         const data = await querySc(
             contractAddress as string,
@@ -59,13 +60,14 @@ const Home: NextPage = () => {
                 )
             });
         };
-        };
+        };        
 
-    useEffect(() => {
-        getReceive();
-        return () => {
-        };
-    });
+        useEffect(() => {
+            getReceive();
+            return () => {
+              };
+        }, []);
+
 
     return (
         <RequiresAuth  >

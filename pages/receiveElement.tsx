@@ -27,7 +27,8 @@ function receiveElement( {record} : {record: String}) {
         data: data,
         value: 0.01,
         gasLimit: 10000000,
-        webReturnUrl: window.location.toString() + webWalletTxReturnPath,
+        // webReturnUrl: window.location.toString() + webWalletTxReturnPath,
+        webReturnUrl: window.location.origin,
     });
     setTxData('');
     console.log(txResult);

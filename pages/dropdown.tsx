@@ -42,40 +42,43 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     const isMounted = useRef(false);
     useLayoutEffect(() => {
       if (props.enforce_max) {
-      if (isMounted.current) {
-        setValueHuman(0);
-        const requestOptions = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        };
-        fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['full_name'], requestOptions)
-            .then( (response) => 
-            { 
-              if (!response.ok)  
-                {
-                  console.log(response.status);
-                  if(response.status === 404) {
-                  return Promise.reject('error 404')
+        if (isMounted.current) {
+          setValueHuman(0);
+          setValue(0);
+          const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          };
+          fetch(network['apiAddress'] + '/accounts/' + props.address + '/tokens/' + selected['full_name'], requestOptions)
+              .then( (response) => 
+              { 
+                if (!response.ok)  
+                  {
+                    console.log(response.status);
+                    if(response.status === 404) {
+                      setBalanceHuman(0);
+                      setBalance(0);
+                      return Promise.reject('error 404')
+                  }
                 }
-              }
-              return response.json();
-            })
-            .then(data => {
-              if (data['balance']) {
-                let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,18));
-                setBalance(data['balance'])
-                setBalanceHuman(tempValue)
-              } else {
-                setBalance(0);
-                setBalanceHuman(0);
-              }
-              }).catch(function() {
-                console.log('Error Fetching Data');
-              });
-        } else {
-        isMounted.current = true;
-      }
-      }},[selected]);
+                return response.json();
+              })
+              .then(data => {
+                if (data['balance']) {
+                  let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,18));
+                  setBalance(data['balance'])
+                  setBalanceHuman(tempValue)
+                } else {
+                  setBalance(0);
+                  setBalanceHuman(0);
+                }
+                }).catch(function() {
+                  console.log('Error Fetching Data');
+                });
+          } else {
+          isMounted.current = true;
+        }
+        }},[selected]);
 
     function onHandleChange(valueHuman: number) {
       let tempValue = valueHuman * Math.pow(10,18);
@@ -108,7 +111,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
  
   return (
     <Listbox style={{width: '14.5rem'}} value={selected} onChange={setSelected}>
-    <div  className="relative mt-1">
+    <div className="relative mt-1">
       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm h-14" >
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <SelectorIcon
@@ -180,11 +183,9 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
          <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
-      {value} {valueHuman}
+    {value} {valueHuman}
     </div>
-
   </Listbox>
-  
   )
 
 }
