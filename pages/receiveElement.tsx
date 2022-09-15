@@ -3,8 +3,8 @@ import {Address} from "@elrondnetwork/erdjs/out";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
-import {useState} from "react";
-import {webWalletTxReturnPath } from '../utils/routes';
+// import {useState} from "react";
+// import {webWalletTxReturnPath } from '../utils/routes';
 import {contractAddress} from "../config"; 
 
 function hex2a(hexx: String) {
@@ -15,22 +15,19 @@ function hex2a(hexx: String) {
     return str;
 }
 
-
 function receiveElement( {record} : {record: String}) {
 
   const {makeTransaction} = useTransaction(); 
-  const [txData, setTxData] = useState('');
+  // const [txData, setTxData] = useState('');
 
   const sendTransaction = async (data: string) => {
     const txResult = await makeTransaction({
         receiver: contractAddress,
         data: data,
-        value: 0.01,
         gasLimit: 10000000,
-        // webReturnUrl: window.location.toString() + webWalletTxReturnPath,
         webReturnUrl: window.location.origin,
     });
-    setTxData('');
+    // setTxData('');
     console.log(txResult);
   };
 
@@ -51,7 +48,7 @@ function receiveElement( {record} : {record: String}) {
  
   function handleAcceptClick() {
     let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
-                '@657363726F77' + // escrow function name in hex         
+                '@6163636570744f66666572' + // acceptOffer function name in hex         
                 '@' + token_to_hex + "@" + amount_to_hex  + 
                 '@' + token_from_hex + "@" + amount_from_hex + 
                 '@' + wallet_hex;

@@ -3,8 +3,34 @@ import Card from 'react-bootstrap/Card';
 import Dropdown from './dropdown'
 import { Form } from 'semantic-ui-react'
 import Button from 'react-bootstrap/Button';
+import {contractAddress} from "../config"; 
+import {useTransaction} from "../hooks/useTransaction";
+import {Address} from "@elrondnetwork/erdjs/out"; 
+
+
+function a2hex(str: String)
+  {
+	var arr1 = [];
+	for (var n = 0, l = str.length; n < l; n ++) 
+     {
+		var hex = Number(str.charCodeAt(n)).toString(16);
+		arr1.push(hex);
+	 }
+	return arr1.join('');
+   }
 
 function createOffer( {address} : {address: any}) {
+
+    const {makeTransaction} = useTransaction(); 
+    const sendTransaction = async (data: string) => {
+        const txResult = await makeTransaction({
+            receiver: contractAddress,
+            data: data,
+            gasLimit: 10000000,
+            webReturnUrl: window.location.origin,
+        });
+        console.log(txResult);
+      };
 
     const [validAddress, setValidAddress] = useState('none');
     const [validData, setValidData] = useState('none');
@@ -35,6 +61,33 @@ function createOffer( {address} : {address: any}) {
                 } else 
                 {
                     setValidData('none'); 
+
+                                        
+                    let wallet = Address.fromString(sendAddress).hex();
+                    console.log("wallet: " + wallet);
+                    // let token_to_hex = splt[1]
+                    // let token_to = hex2a(token_to_hex);
+                    // let amount_to_hex = (splt[2])
+                    // let amount_to = parseInt(splt[2], 16);
+                    // let token_from_hex = splt[3]
+                    // let token_from = hex2a(token_from_hex);
+                    // let amount_from_hex = splt[4];
+                    // let amount_from = parseInt(splt[4], 16);
+                    
+                    
+                    // let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
+                    //     '@6163636570744f66666572' + // acceptOffer function name in hex         
+                    //     '@' + token_to_hex + "@" + amount_to_hex  + 
+                    //     '@' + token_from_hex + "@" + amount_from_hex + 
+                    //     '@' + wallet_hex;
+
+                    let data = 'ESDTTransfer@' + wallet;
+                    console.log(data);
+
+
+                    // sendTransaction(data);
+               
+
                 }
         } else 
         {

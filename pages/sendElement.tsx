@@ -5,8 +5,8 @@ import { AddressValue, BigUIntValue, TokenIdentifierValue } from "@elrondnetwork
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
-import {useState} from "react";
-import {webWalletTxReturnPath } from '../utils/routes';
+// import {useState} from "react";
+// import {webWalletTxReturnPath } from '../utils/routes';
 import {TransactionPayload} from "@elrondnetwork/erdjs/out";
 import {contractAddress} from "../config"; 
 
@@ -61,7 +61,7 @@ function handleCancelClick() {
           when the wallet you want to escrow with accepts your offer </Card.Title>
         <Card.Text>
         </Card.Text>
-        <Button variant="primary" onClick={handleCancelClick}>Cancel offer</Button>
+        <Button variant="primary" onClick={handleCancelClick}>Remove offer</Button>
       </Card.Body>
     </Card>
  
