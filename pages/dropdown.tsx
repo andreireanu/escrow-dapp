@@ -183,7 +183,6 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
          <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
-    {value} {valueHuman}
     </div>
   </Listbox>
   )

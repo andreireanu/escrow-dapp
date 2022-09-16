@@ -48,11 +48,11 @@ function createOffer( {address} : {address: any}) {
 
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
-            console.log(sendAddress);
-            console.log(sendData[0]);
-            console.log(receiveData[0]);
-            console.log(sendData[1]);
-            console.log(receiveData[1]);
+            // console.log(sendAddress);
+            // console.log(sendData[0]);
+            // console.log(receiveData[0]);
+            // console.log(sendData[1]);
+            // console.log(receiveData[1]);
             if (sendData[0] === '0' || receiveData[0] === '0' ||
                 sendData[0] === 0 || receiveData[0] === 0 ||
                 sendData[1] === undefined || receiveData[1] === undefined)
@@ -61,33 +61,23 @@ function createOffer( {address} : {address: any}) {
                 } else 
                 {
                     setValidData('none'); 
-
-                                        
-                    let wallet = Address.fromString(sendAddress).hex();
-                    console.log("wallet: " + wallet);
-                    // let token_to_hex = splt[1]
-                    // let token_to = hex2a(token_to_hex);
-                    // let amount_to_hex = (splt[2])
-                    // let amount_to = parseInt(splt[2], 16);
-                    // let token_from_hex = splt[3]
-                    // let token_from = hex2a(token_from_hex);
-                    // let amount_from_hex = splt[4];
-                    // let amount_from = parseInt(splt[4], 16);
-                    
-                    
-                    // let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
-                    //     '@6163636570744f66666572' + // acceptOffer function name in hex         
-                    //     '@' + token_to_hex + "@" + amount_to_hex  + 
-                    //     '@' + token_from_hex + "@" + amount_from_hex + 
-                    //     '@' + wallet_hex;
-
-                    let data = 'ESDTTransfer@' + wallet;
-                    console.log(data);
-
-
-                    // sendTransaction(data);
-               
-
+                    let wallet_hex = Address.fromString(sendAddress).hex();
+                    let token_to_hex = a2hex(sendData[1])
+                    let amount_to_hex =  sendData[0].toString(16);
+                    if (amount_to_hex.length % 2 == 1) {
+                        amount_to_hex = "0" + amount_to_hex;
+                    }
+                    let token_from_hex = a2hex(receiveData[1])
+                    let amount_from_hex =  receiveData[0].toString(16);
+                    if (amount_from_hex.length % 2 == 1) {
+                        amount_from_hex = "0" + amount_from_hex;
+                    }
+                    let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
+                        '@6164644f66666572' + // addOffer function name in hex         
+                        '@' + token_to_hex + "@" + amount_to_hex  + 
+                        '@' + token_from_hex + "@" + amount_from_hex + 
+                        '@' + wallet_hex;
+                    sendTransaction(data);
                 }
         } else 
         {
@@ -106,7 +96,7 @@ function createOffer( {address} : {address: any}) {
     return (
         <>
         <Card style={{ width: '45rem', height: '26rem' }} >
-        <Card.Header style={{ backgroundColor: "#86EFAC" }} >Create offer  </Card.Header>
+        <Card.Header style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
                 <Card.Title>&nbsp;&nbsp;Swap From:  
@@ -131,7 +121,7 @@ function createOffer( {address} : {address: any}) {
         </div>
         <div>
             <Card.Body  style={{ display: 'flex', width: '45rem', flexDirection: "row",   justifyContent: "center", paddingTop: '0rem' }} > 
-                <Button variant="primary" onClick={onMakeOffer}> Make offer </Button> 
+                <Button variant="primary" onClick={onMakeOffer}> Add offer </Button> 
             </Card.Body>
         </div>
       </Card>

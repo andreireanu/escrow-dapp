@@ -35,7 +35,7 @@ function sendElement( {record} : {record: String}) {
     const sendTransaction = async () => {
     await makeTransaction({
       receiver: contractAddress,
-      gasLimit: 5150000,
+      gasLimit: 7000000,
       data: 
         TransactionPayload.contractCall()
         .setFunction(new ContractFunction("removeOffer"))
