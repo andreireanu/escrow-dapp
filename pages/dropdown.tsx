@@ -16,14 +16,12 @@ const myLoader = ({ src }) => {
 function dropdown( props: { display_max: String; address:any; enforce_max: Boolean, handleCallback: any, selected_token: String })  {
 
     let unavailable_token = String(props.selected_token).split(',')[1];
-    // console.log(unavailable_token);
 
     const tokens = [
-        { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
-        { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png'},
-        { id: 3, name: 'ESC3', full_name : 'ESC3-33fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
-        { id: 4, name: 'ESC4', full_name : 'ESC4-44fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
-        { id: 5, name: 'ESC5', full_name : 'ESC5-55fea1', unavailable: false, img: '../tokens/ESC1-492f2b.png' },
+        { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false },
+        { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false },
+        { id: 3, name: 'ESC3', full_name : 'ESC3-a5537c', unavailable: false },
+        { id: 4, name: 'ESC4', full_name : 'ESC4-eaaef2', unavailable: false },
       ]
 
     let foundIndex = tokens.findIndex(element => element.full_name === unavailable_token);
@@ -41,10 +39,12 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     const ref = useRef();
     const isMounted = useRef(false);
     useLayoutEffect(() => {
+      setValueHuman(0);
+      setValue(0);
+      setBalanceHuman(0);
+      setBalance(0);
       if (props.enforce_max) {
         if (isMounted.current) {
-          setValueHuman(0);
-          setValue(0);
           const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -54,10 +54,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
               { 
                 if (!response.ok)  
                   {
-                    console.log(response.status);
                     if(response.status === 404) {
-                      setBalanceHuman(0);
-                      setBalance(0);
                       return Promise.reject('error 404')
                   }
                 }
@@ -68,12 +65,8 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
                   let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,18));
                   setBalance(data['balance'])
                   setBalanceHuman(tempValue)
-                } else {
-                  setBalance(0);
-                  setBalanceHuman(0);
-                }
+                } 
                 }).catch(function() {
-                  console.log('Error Fetching Data');
                 });
           } else {
           isMounted.current = true;
@@ -92,23 +85,22 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     }
     
     function onHandleMax() {
-      // console.log('MAX: ' + balance);
       let tempValue: number = divide(BigInt(balance), Math.pow(10,18));
-      console.log('Comparing ' + tempValue + ' with ' + valueHuman);
       setValue(balance);
-      // console.log('MAX HUMAN: ' + tempValue);
       setValueHuman(tempValue);
-      console.log('AFTER MODIF: ' + valueHuman);
     }
 
     useEffect(() => {
-      console.log('USE EFFECT: ' + valueHuman);
       setValueHuman(valueHuman);
       ref.current.value = valueHuman;
       props.passData([value, selected.full_name]);
     }, [valueHuman])
 
- 
+    useEffect(() => {
+      ref.current.value = 0;
+      props.passData([value, selected.full_name]);
+    }, [selected])
+
   return (
     <Listbox style={{width: '14.5rem'}} value={selected} onChange={setSelected}>
     <div className="relative mt-1">
@@ -180,7 +172,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
         <InputNumber ref={ref} value={valueHuman>0? valueHuman: null} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}  >
-         <Button style={{ display : props.display_max}}  onClick = {onHandleMax} variant="primary"> Max </Button> 
+         <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
       </div>
     </div>

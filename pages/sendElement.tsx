@@ -56,9 +56,9 @@ function handleCancelClick() {
     <Card style={{ width: '45rem' }}>
       <Card.Header style={{ backgroundColor : 'lightblue' }} >Offer for {wallet}</Card.Header>
       <Card.Body>
-        <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> token(s) of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the escrow smart contract </Card.Title>
+        <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> tokens of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the escrow smart contract. </Card.Title>
         <Card.Title> You will receive <span style={{ color : 'DarkCyan' }} > {amount_from_human} </span> tokens of type <span style={{ color : 'DarkCyan' }} > {token_from} </span> in exchange 
-          when the wallet you want to escrow with accepts your offer </Card.Title>
+          when the peer wallet accepts your offer. </Card.Title>
         <Card.Text>
         </Card.Text>
         <Button variant="primary" onClick={handleCancelClick}>Remove offer</Button>

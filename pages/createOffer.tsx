@@ -29,7 +29,7 @@ function createOffer( {address} : {address: any}) {
             gasLimit: 10000000,
             webReturnUrl: window.location.origin,
         });
-        console.log(txResult);
+        // console.log(txResult);
       };
 
     const [validAddress, setValidAddress] = useState('none');
@@ -48,11 +48,11 @@ function createOffer( {address} : {address: any}) {
 
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
-            // console.log(sendAddress);
-            // console.log(sendData[0]);
-            // console.log(receiveData[0]);
-            // console.log(sendData[1]);
-            // console.log(receiveData[1]);
+            console.log(sendAddress);
+            console.log(sendData[0]);
+            console.log(receiveData[0]);
+            console.log(sendData[1]);
+            console.log(receiveData[1]);
             if (sendData[0] === '0' || receiveData[0] === '0' ||
                 sendData[0] === 0 || receiveData[0] === 0 ||
                 sendData[1] === undefined || receiveData[1] === undefined)
@@ -77,7 +77,7 @@ function createOffer( {address} : {address: any}) {
                         '@' + token_to_hex + "@" + amount_to_hex  + 
                         '@' + token_from_hex + "@" + amount_from_hex + 
                         '@' + wallet_hex;
-                    sendTransaction(data);
+                    // sendTransaction(data);
                 }
         } else 
         {
@@ -95,7 +95,7 @@ function createOffer( {address} : {address: any}) {
 
     return (
         <>
-        <Card style={{ width: '45rem', height: '26rem' }} >
+        <Card style={{ width: '45rem', height: '26rem' }}>
         <Card.Header style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
@@ -107,21 +107,21 @@ function createOffer( {address} : {address: any}) {
                 </Card.Title>  
             </Card.Body>
             <Card.Body>
-            <div style={{ display: 'flex',  width: '38.5rem', flexDirection: "row", justifyContent: "space-between"}}>
-                <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;Make offer for: </Card.Title>
+            <div style={{ display: 'flex',  width: '38rem', flexDirection: "row", justifyContent: "space-between"}}>
+                <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;&nbsp;Offer for: </Card.Title>
                 <div style={{ display : validAddress, color: 'red'}}> Invalid address </div>
                 <div style={{ display : validData, color: 'red'}}> Please check missing swap data </div>
             </div>
             <Form>
-                <Form.Field style={{ paddingLeft: '5.0rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={e => onChangeAddress(e.target.value)}   >
-                    <input style={{ width: '33.5rem', height: '2.4rem', borderWidth: 1, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='&nbsp;Enter Address' />
+                <Form.Field style={{ paddingLeft: '4.6rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={e => onChangeAddress(e.target.value)}   >
+                    <input className="pl-3" style={{ width: '33.5rem', height: '2.4rem', borderWidth: 1, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='Enter Address' />
                 </Form.Field>
             </Form>
             </Card.Body>
         </div>
         <div>
             <Card.Body  style={{ display: 'flex', width: '45rem', flexDirection: "row",   justifyContent: "center", paddingTop: '0rem' }} > 
-                <Button variant="primary" onClick={onMakeOffer}> Add offer </Button> 
+                <Button variant="primary" onClick={onMakeOffer} onFocus={(e:any) => (e.target.blur())} > Add offer </Button> 
             </Card.Body>
         </div>
       </Card>

@@ -28,7 +28,7 @@ function receiveElement( {record} : {record: String}) {
         webReturnUrl: window.location.origin,
     });
     // setTxData('');
-    console.log(txResult);
+    // console.log(txResult);
   };
 
   const hex = Buffer.from(record, 'base64').toString('hex');
@@ -56,11 +56,11 @@ function receiveElement( {record} : {record: String}) {
     }   
 
   return (
-     <Card style={{ width: '45rem' }}>
+     <Card style={{ width: '45rem'}}>
       <Card.Header style={{ backgroundColor : 'BurlyWood' }} >Offer from {wallet}</Card.Header>
       <Card.Body>
-        <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> token(s) of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the escrow smart contract </Card.Title>
-        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately </Card.Title>
+        <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the escrow smart contract. </Card.Title>
+        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately. </Card.Title>
         <Card.Text>
         </Card.Text>
         <Button variant="primary" onClick={handleAcceptClick}>Accept offer</Button>

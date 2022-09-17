@@ -1,7 +1,6 @@
 import type {NextPage} from 'next'
 import RequiresAuth from "../components/RequiresAuth";
 import {useAuth} from "@elrond-giants/erd-react-hooks";
-import {egldLabel} from "../config";
 import {useState} from "react";
  
 import {Address} from "@elrondnetwork/erdjs/out";
@@ -11,8 +10,10 @@ import {useEffect} from "react";
 import SendList from './sendList'
 import ReceiveList from './receiveList'
 import CreateOffer from './createOffer'
+import Button from 'react-bootstrap/Button';
 
 const Home: NextPage = () => {
+
     const {address, logout, env, balance, nonce} = useAuth();
     const [dataSend, setDataSend] = useState<any | null>([]);
     const [dataReceive, setDataReceive] = useState<any | null>([]);
@@ -62,12 +63,23 @@ const Home: NextPage = () => {
         };
         };        
 
-        useEffect(() => {
-            getReceive();
-            return () => {
-              };
-        }, []);
+    // useEffect(() => {
+    // const intervalId = setInterval(() => { 
+    //     // getReceive();
+    //     console.log('Running else');
+    //     return () => {
+    //         };
+    //     }, 10000)
+    //     return () =>  {
+    //     clearInterval(intervalId);
+    //     }
+    // }, []);
 
+    useEffect(() => {
+        getReceive();
+        return () => {
+            };
+        }, []);
 
     return (
         <RequiresAuth  >
@@ -75,26 +87,28 @@ const Home: NextPage = () => {
                 body {
                     background: ${"Snow"};
                 }
-                `}</style>
+                `}
+            </style>
+            <div className="justify-end items-baseline" style={{ display: 'flex'}}>
+                <p className="text-lg mt-3 pr-4 font-semibold">
+                    {address}</p>
+                <Button className="mt-3 mr-4" variant="primary" onClick={() => {
+                                    logout();
+                                }}>Logout
+                </Button>
+            </div>
             <div className="flex justify-center w-full mt-20">
-                <div className="flex flex-col items-start space-y-2 max-w-screen-md">
-                    <h2 className="text-xl">Welcome to Elrond Escrow ESDTs !</h2>
-                    <p>Address: {address}</p>
-                    <p>Balance: {balance.toDenominatedString() + egldLabel}</p>
-                    <p>Nonce: {nonce}</p>
-                    <button type="button"
-                            className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            onClick={() => {
-                                logout();
-                            }}
-                    >
-                        Logout
-                    </button>
+                <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
+                    <h2 className="text-xxl">Welcome to Elrond Escrow!</h2>
+                    <h6 className="pb-2">
+                        Swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
+                        Once created, offers by you and for you will appear on this page.
+                    </h6>
                 <CreateOffer address={address}></CreateOffer>
                 <SendList data = {dataSend}></SendList>
                 <ReceiveList data = {dataReceive}></ReceiveList>
                 </div>
-            </div>
+            </div> 
         </RequiresAuth>
     );
 };
