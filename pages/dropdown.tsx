@@ -16,6 +16,7 @@ const myLoader = ({ src }) => {
 
 function dropdown( props: { display_max: String; address:any; enforce_max: Boolean, handleCallback: any, selected_token: String })  {
 
+    let nf = new Intl.NumberFormat('en-US');
     let unavailable_token = String(props.selected_token).split(',')[1];
 
     tokens.map((token) => {
@@ -75,7 +76,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       let tempValue = valueHuman * Math.pow(10,Number(selected['decimals']));
       if (tempValue >= balance && props.enforce_max == true) {
         setValue(balance);
-        setValueHuman(balanceHuman);
+        setValueHuman(balanceHuman.toLocaleString());
       } else {
         setValue(tempValue);
         setValueHuman(valueHuman);
@@ -83,11 +84,9 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     }
     
     function onHandleMax() {
-      if (ref.current.value > 0) {
-        let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
-        setValue(balance);
-        setValueHuman(tempValue);
-      }
+      let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
+      setValue(balance);
+      setValueHuman(tempValue);
     }
 
     useEffect(() => {
@@ -169,13 +168,13 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
         </Listbox.Options>  
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
-        <InputNumber ref={ref} value={valueHuman>0? valueHuman: null} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
+        <InputNumber ref={ref} value={valueHuman>0? nf.format(valueHuman): null} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} >
          <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div className="grow" style={{ display: 'flex', flexDirection: "column" }} >
             <div style={{ display : props.display_max}} className="text-lg h-5 text-end mb-0 mb-0" >Balance: </div>
-            <div style={{ display : props.display_max}} className="text-lg h-6.5 text-end mt-0 mp-0" >{balanceHuman.toFixed(2)} </div>
+            <div style={{ display : props.display_max}} className="text-lg h-6.3 text-end mt-0 mp-0" >{nf.format(balanceHuman.toFixed(2))} </div>
          </div>
       </div>
       {/* {value} {valueHuman} */}
