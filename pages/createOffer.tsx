@@ -95,7 +95,7 @@ function createOffer( {address} : {address: any}) {
 
     return (
         <>
-        <Card style={{ width: '45rem', height: '26rem' }}>
+        <Card style={{ width: '45rem', height: '26.5rem' }}>
         <Card.Header style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
@@ -120,7 +120,7 @@ function createOffer( {address} : {address: any}) {
             </Card.Body>
         </div>
         <div>
-            <Card.Body  style={{ display: 'flex', width: '45rem', flexDirection: "row",   justifyContent: "center", paddingTop: '0rem' }} > 
+            <Card.Body  style={{ display: 'flex', width: '45rem', flexDirection: "row",   justifyContent: "center", paddingTop: '0rem'}} > 
                 <Button variant="primary" onClick={onMakeOffer} onFocus={(e:any) => (e.target.blur())} > Add offer </Button> 
             </Card.Body>
         </div>

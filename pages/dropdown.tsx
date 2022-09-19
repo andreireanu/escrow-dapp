@@ -8,7 +8,8 @@ import divide from 'divide-bigint'
 import Button from 'react-bootstrap/Button';
 import InputNumber from 'rc-input-number';
 import Image from 'next/image'
- 
+import {tokens} from '../components/Tokens';
+
 const myLoader = ({ src }) => {
   return `/tokens/${src}.png`
 }
@@ -17,18 +18,13 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
 
     let unavailable_token = String(props.selected_token).split(',')[1];
 
-    const tokens = [
-        { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false },
-        { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false },
-        { id: 3, name: 'ESC3', full_name : 'ESC3-a5537c', unavailable: false },
-        { id: 4, name: 'ESC4', full_name : 'ESC4-eaaef2', unavailable: false },
-      ]
-
-    let foundIndex = tokens.findIndex(element => element.full_name === unavailable_token);
-    if (foundIndex > -1)
-      {
-        tokens[foundIndex].unavailable = true;
+    tokens.map((token) => {
+      if (token.full_name == unavailable_token) {
+        token.unavailable = true;
+      } else {
+        token.unavailable = false;
       }
+    });
 
     const [selected, setSelected] = useState('')
     const [balance, setBalance] = useState(0)
@@ -45,6 +41,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       setBalance(0);
       if (props.enforce_max) {
         if (isMounted.current) {
+          console.log();
           const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -62,9 +59,10 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
               })
               .then(data => {
                 if (data['balance']) {
-                  let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,18));
-                  setBalance(data['balance'])
-                  setBalanceHuman(tempValue)
+                  let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,Number(selected['decimals'])));
+                  console.log(tempValue);
+                  setBalance(data['balance']);
+                  setBalanceHuman(tempValue);
                 } 
                 }).catch(function() {
                 });
@@ -74,7 +72,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
         }},[selected]);
 
     function onHandleChange(valueHuman: number) {
-      let tempValue = valueHuman * Math.pow(10,18);
+      let tempValue = valueHuman * Math.pow(10,Number(selected['decimals']));
       if (tempValue >= balance && props.enforce_max == true) {
         setValue(balance);
         setValueHuman(balanceHuman);
@@ -85,9 +83,11 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     }
     
     function onHandleMax() {
-      let tempValue: number = divide(BigInt(balance), Math.pow(10,18));
-      setValue(balance);
-      setValueHuman(tempValue);
+      if (ref.current.value > 0) {
+        let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
+        setValue(balance);
+        setValueHuman(tempValue);
+      }
     }
 
     useEffect(() => {
@@ -171,10 +171,14 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
         <InputNumber ref={ref} value={valueHuman>0? valueHuman: null} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
       </div>
-      <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}  >
+      <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} >
          <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 
-         <div style={{ display : props.display_max}}>Balance: {balanceHuman.toFixed(2)}</div>
+         <div className="grow" style={{ display: 'flex', flexDirection: "column" }} >
+            <div style={{ display : props.display_max}} className="text-lg h-5 text-end mb-0 mb-0" >Balance: </div>
+            <div style={{ display : props.display_max}} className="text-lg h-6.5 text-end mt-0 mp-0" >{balanceHuman.toFixed(2)} </div>
+         </div>
       </div>
+      {/* {value} {valueHuman} */}
     </div>
   </Listbox>
   )
