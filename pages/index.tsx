@@ -6,17 +6,22 @@ import {useState} from "react";
 import {Address} from "@elrondnetwork/erdjs/out";
 import {querySc} from "../apis/queries";
 import {contractAddress} from "../config"; 
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import SendList from './sendList'
 import ReceiveList from './receiveList'
 import CreateOffer from './createOffer'
 import Button from 'react-bootstrap/Button';
+import { BsClipboard, BsClipboardCheck } from "react-icons/bs"; 
+import Box from '@mui/material/Box';
 
 const Home: NextPage = () => {
 
     const {address, logout, env, balance, nonce} = useAuth();
     const [dataSend, setDataSend] = useState<any | null>([]);
     const [dataReceive, setDataReceive] = useState<any | null>([]);
+    const [clipboardDisplay, setClipboardDisplay] = useState(true);
+    const ref = useRef();
+    const timeOut = useRef(null);
 
     const getSend = async () => {
         const data = await querySc(
@@ -81,6 +86,14 @@ const Home: NextPage = () => {
             };
         }, []);
 
+    function onHandleClick() {
+        navigator.clipboard.writeText(ref.current.outerText);
+        setClipboardDisplay(false);
+        setTimeout(() => {
+            setClipboardDisplay(true);
+          }, 1000);
+    }
+
     return (
         <RequiresAuth  >
             <style jsx global>{`
@@ -89,13 +102,25 @@ const Home: NextPage = () => {
                 }
                 `}
             </style>
-            <div className="justify-end items-baseline" style={{ display: 'flex'}}>
-                <p className="font-semibold"> {address !== null? address.slice(0, 6) + '...' + address.slice(-5) : null}</p>
-                <Button className="mt-3 mr-4" variant="primary" onClick={() => {
+            <div className="justify-end items-baseline " style={{ display: 'flex'}}>
+                <div style={{ display : 'none'}} ref={ref}>{address}</div>
+                <Box style={{ backgroundColor: 'white' }} className="flex items-center rounded-md border-4 mr-2 whitespace-pre-wrap" >              
+                    <div> 
+                    <p className="m-1"> {address !== null? address.slice(0, 6) + '...' + address.slice(-5) + ' '   : null}</p>
+                    </div>
+                    <div>
+                    {/* value={valueHuman>0? valueHuman: null} */}
+                    <BsClipboard style={{ display : clipboardDisplay?  'flex' : 'none' }} className="mr-2 align-baseline" onClick={onHandleClick}/>
+                    </div>
+                    <div>
+                    <BsClipboardCheck style={{ display : clipboardDisplay?  'none' : 'flex' }} className="mr-2 align-baseline"/>
+                    </div>
+                </Box>
+
+                <Button className="mt-3 mr-4 " variant="primary" onClick={() => {
                                     logout();
                                 }}>Logout
                 </Button>
-                {/* <Button onClick={() => {navigator.clipboard.writeText(address.textToCopy)}}>Click</Button> */}
             </div>
             <div className="flex justify-center w-full mt-20">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
@@ -111,7 +136,7 @@ const Home: NextPage = () => {
                     <div className="self-center">
                         Made with&nbsp;
                         <svg style={{ height: 14, width: 18 }} className="inline" 
-                        class="text-danger " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z" ></path>
+                         role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z" ></path>
                         </svg>
                         &nbsp;by&nbsp;<a href="https://t.me/andreiope">Andrei</a>
                     </div>
