@@ -84,9 +84,12 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     }
     
     function onHandleMax() {
-      let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
-      setValue(balance);
-      setValueHuman(tempValue);
+      console.log(String(selected));
+      if (selected !== '') {
+        let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
+        setValue(balance);
+        setValueHuman(tempValue);
+      }
     }
 
     useEffect(() => {

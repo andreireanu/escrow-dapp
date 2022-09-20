@@ -128,7 +128,7 @@ const Home: NextPage = () => {
                     <h6 className="pb-2">
                         Swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
                         Once created, offers by you and for you will appear on this page.
-                        You can always cancel any posted offers. Happy trading!
+                        You can always remove the offers you've added. Good luck negotiating those trades!
                     </h6>
                 <CreateOffer address={address}></CreateOffer>
                 <SendList data = {dataSend}></SendList>

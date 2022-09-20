@@ -9,6 +9,7 @@ import {useTransaction} from "../hooks/useTransaction";
 // import {webWalletTxReturnPath } from '../utils/routes';
 import {TransactionPayload} from "@elrondnetwork/erdjs/out";
 import {contractAddress} from "../config"; 
+import {tokens} from '../components/Tokens';
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -22,15 +23,24 @@ function hex2a(hexx: String) {
 function sendElement( {record} : {record: String}) {
 
     const {makeTransaction} = useTransaction(); 
+    let regexConst = new RegExp(/0000000(?!0)./g);
     const hex = Buffer.from(record, 'base64').toString('hex');
-    let splt = hex.replaceAll('0000000b',',').replaceAll('00000008',',').split(',');   
+    let splt = hex.replaceAll(regexConst, ',').split(','); 
     let wallet = Address.fromString(splt[0]).bech32()
     let token_to = hex2a(splt[1]);
     let amount_to = parseInt(splt[2], 16);
     let token_from = hex2a(splt[3]);
     let amount_from = parseInt(splt[4], 16);
-    const amount_to_human = amount_to / ( Math.pow(10,18)) ;
-    const amount_from_human = amount_from / ( Math.pow(10,18)) ;
+    let decimal_to = tokens.find(token => {
+      if (token.full_name === token_to) {
+        return token;
+      }})?.decimals ;
+    let decimal_from = tokens.find(token => {
+      if (token.full_name === token_from) {
+        return token;
+      }})?.decimals ;
+    const amount_to_human = amount_to / ( Math.pow(10,Number(decimal_to))) ;
+    const amount_from_human = amount_from / ( Math.pow(10,Number(decimal_from))) ;
   
     const sendTransaction = async () => {
     await makeTransaction({

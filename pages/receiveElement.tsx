@@ -6,6 +6,7 @@ import {useTransaction} from "../hooks/useTransaction";
 // import {useState} from "react";
 // import {webWalletTxReturnPath } from '../utils/routes';
 import {contractAddress} from "../config"; 
+import {tokens} from '../components/Tokens';
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -32,7 +33,8 @@ function receiveElement( {record} : {record: String}) {
   };
 
   const hex = Buffer.from(record, 'base64').toString('hex');
-  let splt = hex.replaceAll('0000000b',',').replaceAll('00000008',',').split(',');   
+  let regexConst = new RegExp(/0000000(?!0)./g);
+  let splt = hex.replaceAll(regexConst, ',').split(','); 
   let wallet_hex = splt[0];
   let wallet = Address.fromString(wallet_hex).bech32()
   let token_to_hex = splt[1]
@@ -43,8 +45,16 @@ function receiveElement( {record} : {record: String}) {
   let token_from = hex2a(token_from_hex);
   let amount_from_hex = splt[4];
   let amount_from = parseInt(splt[4], 16);
-  const amount_to_human = amount_to / ( Math.pow(10,18)) ;
-  const amount_from_human = amount_from / ( Math.pow(10,18)) ;
+  let decimal_to = tokens.find(token => {
+    if (token.full_name === token_to) {
+      return token;
+    }})?.decimals ;
+  let decimal_from = tokens.find(token => {
+    if (token.full_name === token_from) {
+      return token;
+    }})?.decimals ;
+  const amount_to_human = amount_to / ( Math.pow(10,Number(decimal_to))) ;
+  const amount_from_human = amount_from / ( Math.pow(10,Number(decimal_from))) ;
  
   function handleAcceptClick() {
     let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
@@ -57,7 +67,7 @@ function receiveElement( {record} : {record: String}) {
 
   return (
      <Card style={{ width: '45rem'}}>
-      <Card.Header style={{ backgroundColor : 'BurlyWood' }} >Offer from {wallet}</Card.Header>
+      <Card.Header style={{ backgroundColor : 'PeachPuff' }} >Offer from {wallet}</Card.Header>
       <Card.Body>
         <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the escrow smart contract. </Card.Title>
         <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately. </Card.Title>
@@ -70,3 +80,7 @@ function receiveElement( {record} : {record: String}) {
 }
 
 export default receiveElement
+
+function r(r: any, arg1: string, arg2: string): any {
+  throw new Error('Function not implemented.');
+}

@@ -77,7 +77,7 @@ function createOffer( {address} : {address: any}) {
                         '@' + token_to_hex + "@" + amount_to_hex  + 
                         '@' + token_from_hex + "@" + amount_from_hex + 
                         '@' + wallet_hex;
-                    // sendTransaction(data);
+                    sendTransaction(data);
                 }
         } else 
         {
