@@ -29,7 +29,6 @@ function createOffer( {address} : {address: any}) {
             gasLimit: 10000000,
             webReturnUrl: window.location.origin,
         });
-        // console.log(txResult);
       };
 
     const [validAddress, setValidAddress] = useState('none');
@@ -48,11 +47,6 @@ function createOffer( {address} : {address: any}) {
 
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
-            console.log(sendAddress);
-            console.log(sendData[0]);
-            console.log(receiveData[0]);
-            console.log(sendData[1]);
-            console.log(receiveData[1]);
             if (sendData[0] === '0' || receiveData[0] === '0' ||
                 sendData[0] === 0 || receiveData[0] === 0 ||
                 sendData[1] === undefined || receiveData[1] === undefined)
@@ -121,7 +115,7 @@ function createOffer( {address} : {address: any}) {
         </div>
         <div>
             <Card.Body  style={{ display: 'flex', width: '45rem', flexDirection: "row",   justifyContent: "center", paddingTop: '0rem'}} > 
-                <Button variant="primary" onClick={onMakeOffer} onFocus={(e:any) => (e.target.blur())} > Add offer </Button> 
+                <Button style={{  width: '8rem' }} variant="primary" onClick={onMakeOffer} onFocus={(e:any) => (e.target.blur())} >Add offer</Button> 
             </Card.Body>
         </div>
       </Card>

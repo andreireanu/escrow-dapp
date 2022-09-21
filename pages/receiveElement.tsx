@@ -3,8 +3,8 @@ import {Address} from "@elrondnetwork/erdjs/out";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
-// import {useState} from "react";
-// import {webWalletTxReturnPath } from '../utils/routes';
+import {useState} from "react";
+import {webWalletTxReturnPath } from '../utils/routes';
 import {contractAddress} from "../config"; 
 import {tokens} from '../components/Tokens';
 
@@ -19,7 +19,7 @@ function hex2a(hexx: String) {
 function receiveElement( {record} : {record: String}) {
 
   const {makeTransaction} = useTransaction(); 
-  // const [txData, setTxData] = useState('');
+  const [txData, setTxData] = useState('');
 
   const sendTransaction = async (data: string) => {
     const txResult = await makeTransaction({
@@ -28,8 +28,7 @@ function receiveElement( {record} : {record: String}) {
         gasLimit: 10000000,
         webReturnUrl: window.location.origin,
     });
-    // setTxData('');
-    // console.log(txResult);
+    setTxData('');
   };
 
   const hex = Buffer.from(record, 'base64').toString('hex');
@@ -66,21 +65,21 @@ function receiveElement( {record} : {record: String}) {
     }   
 
   return (
-     <Card style={{ width: '45rem'}}>
+     <Card style={{ width: '45rem' }}>
       <Card.Header style={{ backgroundColor : 'PeachPuff' }} >Offer from {wallet}</Card.Header>
-      <Card.Body>
+      <Card.Body style={{ display: 'flex', flexDirection: "column", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
         <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the escrow smart contract. </Card.Title>
         <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately. </Card.Title>
         <Card.Text>
         </Card.Text>
-        <Button variant="primary" onClick={handleAcceptClick}>Accept offer</Button>
       </Card.Body>
+      <Card.Body  style={{ display: 'flex', width: '45rem', flexDirection: "row",   justifyContent: "center", paddingTop: '1.5srem'}} > 
+        <Button style={{  width: '8rem' }} variant="primary" onClick={handleAcceptClick}>Accept offer</Button>
+        </Card.Body>
     </Card>  
   )
 }
 
 export default receiveElement
 
-function r(r: any, arg1: string, arg2: string): any {
-  throw new Error('Function not implemented.');
-}
+ 

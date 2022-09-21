@@ -42,7 +42,6 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       setBalance(0);
       if (props.enforce_max) {
         if (isMounted.current) {
-          console.log();
           const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -61,7 +60,6 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
               .then(data => {
                 if (data['balance']) {
                   let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,Number(selected['decimals'])));
-                  console.log(tempValue);
                   setBalance(data['balance']);
                   setBalanceHuman(tempValue);
                 } 
@@ -84,7 +82,6 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     }
     
     function onHandleMax() {
-      console.log(String(selected));
       if (selected !== '') {
         let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
         setValue(balance);
