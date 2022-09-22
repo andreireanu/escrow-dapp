@@ -44,7 +44,6 @@ export default function Notification(
 
 
     function onHandleClick() {
-        console.log(title !== "Sign Transaction");
         navigator.clipboard.writeText(title);
         clipboardDisplay = false;
         setTimeout(() => {
@@ -75,11 +74,9 @@ export default function Notification(
                         <div className="ml-3 w-0 flex-1 pt-0.5">
                             <p className="text-sm font-medium text-gray-900">{title}</p>
                             <p className="mt-1 text-sm text-gray-500 break-all" >{body} 
-
-                            <BsClipboard style={{ display :  title !== "Sign Transaction" && clipboardDisplay ?  'inline-block' : 'none' }} className="ml-2 mr-2 " onClick={onHandleClick} />
+                            {/* <BsClipboard style={{ display :  title !== "Sign Transaction" && clipboardDisplay ?  'inline-block' : 'none' }} className="ml-2 mr-2 " onClick={onHandleClick} />
                             <BsClipboardCheck style={{ display : title !== "Sign Transaction" && !clipboardDisplay ?   'inline-block' : 'none' }} className="mr-2  "/>
-                            
-                            
+                             */}
                             </p>
                         </div>
                         <div className="ml-4 flex-shrink-0 flex">

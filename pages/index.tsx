@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     const [dataReceive, setDataReceive] = useState<any | null>([]);
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref = useRef();
-    const timeOut = useRef(null);
+    let refreshInterval = 15000000;
 
     const getSend = async () => {
         const data = await querySc(
@@ -31,6 +31,7 @@ const Home: NextPage = () => {
                 args: [new Address(address!).hex()],
                 outputType: "query",
             });    
+        setDataSend([]);    
         if (data.data.returnData) {
             data.data.returnData.map( (record: any)  => {
                 setDataSend(   
@@ -57,6 +58,7 @@ const Home: NextPage = () => {
                 args: [new Address(address!).hex()],
                 outputType: "query",
             });    
+        setDataReceive([]);
         if (data.data.returnData) {
             data.data.returnData.map( (record: any)  => {
                 setDataReceive(   
@@ -68,17 +70,17 @@ const Home: NextPage = () => {
         };
         };        
 
-    // useEffect(() => {
-    // const intervalId = setInterval(() => { 
-    //     // getReceive();
-    //     console.log('Running else');
-    //     return () => {
-    //         };
-    //     }, 10000)
-    //     return () =>  {
-    //     clearInterval(intervalId);
-    //     }
-    // }, []);
+    useEffect(() => {
+    const intervalId = setInterval(() => { 
+        getReceive();
+        console.log('Running else');
+        return () => {
+            };
+        }, refreshInterval)
+        return () =>  {
+        clearInterval(intervalId);
+        }
+    }, []);
 
     useEffect(() => {
         getReceive();
@@ -110,7 +112,6 @@ const Home: NextPage = () => {
                     <p className="m-1"> {address !== null? address.slice(0, 6) + '...' + address.slice(-5) + ' '   : null}</p>
                     </div>
                     <div>
-                    {/* value={valueHuman>0? valueHuman: null} */}
                     <BsClipboard style={{ display : clipboardDisplay?  'flex' : 'none' }} className="mr-2 align-baseline" onClick={onHandleClick}/>
                     </div>
                     <div>
@@ -124,7 +125,7 @@ const Home: NextPage = () => {
             </div>
             <div className="flex justify-center w-full mt-10">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
-                    <h2 className="text-xxl">Welcome to Elrond Escrow!</h2>
+                    <h2 className="text-xxl">Welcome to Elrond Pact!</h2>
                     <h6 className="pb-2">
                         Swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
                         Once created, offers by you and for you will appear on this page.
@@ -143,8 +144,8 @@ const Home: NextPage = () => {
                     </svg>
                     &nbsp;by&nbsp;<a href="https://t.me/andreiope">Andrei</a>
                 </div>
-                <div className="self-center">This is a free service, please consider donating @escrow.exchange</div>
-                <div className="self-center">This dApp uses open-source code provided by the wonderful <a href="https://github.com/Elrond-Giants">Elrond Giants</a> team</div>
+                <div className="self-center">This is a free service, please consider donating @pact </div>
+                <div className="self-center">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
             </div>
             </div> 
 

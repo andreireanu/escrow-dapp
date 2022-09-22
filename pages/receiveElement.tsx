@@ -68,7 +68,7 @@ function receiveElement( {record} : {record: String}) {
      <Card style={{ width: '45rem' }}>
       <Card.Header style={{ backgroundColor : 'PeachPuff' }} >Offer from {wallet}</Card.Header>
       <Card.Body style={{ display: 'flex', flexDirection: "column", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
-        <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the escrow smart contract. </Card.Title>
+        <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the pact smart contract. </Card.Title>
         <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> token(s) of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately. </Card.Title>
         <Card.Text>
         </Card.Text>

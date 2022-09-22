@@ -48,7 +48,11 @@ const Auth: NextPage = () => {
     };
 
     const extensionClickHandler = async () => {
-        await login(AuthProviderType.EXTENSION);
+        try {
+            await login(AuthProviderType.EXTENSION);
+          } catch (error) {
+            console.error(error);
+          }
     }
 
     const ledgerClickHandler = async () => {
