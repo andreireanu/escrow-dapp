@@ -34,10 +34,10 @@ function createOffer( {address} : {address: any}) {
     const [validAddress, setValidAddress] = useState('none');
     const [validData, setValidData] = useState('none');
     const [sendAddress, setSendAddress] = useState('');
-    const [sendData, setSendData] = useState('');
-    const [receiveData, setReceiveData] = useState('');
+    const [sendData, setSendData] = useState<[number, string]>([0,'']);
+    const [receiveData, setReceiveData] = useState<[number, string]>([0,'']);
 
-    function onChangeAddress(sendAddress: string) {
+    function onChangeAddress(sendAddress: String) {
         setSendAddress(sendAddress);
     }
 
@@ -47,8 +47,7 @@ function createOffer( {address} : {address: any}) {
 
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
-            if (sendData[0] === '0' || receiveData[0] === '0' ||
-                sendData[0] === 0 || receiveData[0] === 0 ||
+            if (sendData[0] === 0 || receiveData[0] === 0 ||
                 sendData[1] === undefined || receiveData[1] === undefined)
                 {
                     setValidData('inline');
@@ -71,7 +70,7 @@ function createOffer( {address} : {address: any}) {
                         '@' + token_to_hex + "@" + amount_to_hex  + 
                         '@' + token_from_hex + "@" + amount_from_hex + 
                         '@' + wallet_hex;
-                    sendTransaction(data);
+                    // sendTransaction(data);
                 }
         } else 
         {

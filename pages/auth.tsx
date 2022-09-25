@@ -8,7 +8,11 @@ import {AuthProviderType} from "@elrond-giants/erdjs-auth/dist/types";
 import * as config from "../config";
 // @ts-ignore
 import QRCode from 'qrcode';
+import Image from 'next/image'
 
+const myLoader = ({ src }) => {
+    return `/logos/${src}.png`
+  }
 
 const Auth: NextPage = () => {
     const {authenticated, login, getLedgerAccounts} = useAuth();
@@ -65,11 +69,17 @@ const Auth: NextPage = () => {
     }
 
     return (
-        <>
-            <div className="flex flex-col items-center justify-center space-y-4 min-h-half-screen">
-                <h3 className="text-4xl">
-                    Connect your wallet
-                </h3>
+        <> <div style={{ backgroundColor: 'Snow'}} > </div>
+            <div className="flex flex-col items-center justify-center space-y-4 min-h-half-screen pt-16">
+                <Image
+                        loader={myLoader}
+                        src = {'LOGO_HD'}
+                        width={350}
+                        height={250}
+                        />
+                <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
+                    Please connect your wallet to use the Elond Pact service
+                </h2>
                 <p className="text-2xl">Pick a login method</p>
                 <div className="flex items-center space-x-3">
                     <button
@@ -93,13 +103,20 @@ const Auth: NextPage = () => {
                     >
                         Extension
                     </button>
-                    <button
+                    {/* <button
                         type="button"
                         className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-orange-300 hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-300"
                         onClick={ledgerClickHandler}
                     >
                         Ledger
-                    </button>
+                    </button> */}
+                    {/* <button
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-orange-300 hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-300"
+                        onClick={ledgerClickHandler}
+                    >
+                        Ledger
+                    </button> */}
                 </div>
                 {ledgerAccounts.length > 0 && <div className="flex items-center">
                     <span>Select ledger account</span>

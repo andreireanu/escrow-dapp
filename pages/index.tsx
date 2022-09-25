@@ -15,7 +15,6 @@ import { BsClipboard, BsClipboardCheck } from "react-icons/bs";
 import Box from '@mui/material/Box';
 import SendTokens from './sendTokens'
 import Image from 'next/image'
-import {logos} from '../components/Logos';
 
 
 const myLoader = ({ src }) => {
@@ -30,7 +29,7 @@ const Home: NextPage = () => {
     const [dataReceive, setDataReceive] = useState<any | null>([]);
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref = useRef();
-    let refreshInterval = 15000000;
+    let refreshInterval = 15000;
 
     const getSend = async () => {
         const data = await querySc(
@@ -82,7 +81,6 @@ const Home: NextPage = () => {
     useEffect(() => {
     const intervalId = setInterval(() => { 
         getReceive();
-        console.log('Running else');
         return () => {
             };
         }, refreshInterval)
