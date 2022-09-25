@@ -12,3 +12,4 @@ export const chainId = process.env.NEXT_PUBLIC_CHAIN_ID;
 export const denomination = parseInt(process.env.NEXT_PUBLIC_DENOMINATION as string, 10);
 export const egldLabel = process.env.NEXT_PUBLIC_EGLD_LABEL ?? 'xEGLD';
 export const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '';
+export const tokensContractAddress = process.env.NEXT_PUBLIC_TOKENS_CONTRACT_ADDRESS ?? '';

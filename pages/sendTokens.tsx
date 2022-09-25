@@ -1,10 +1,24 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import {tokensContractAddress} from "../config"; 
+import {useTransaction} from "../hooks/useTransaction";
 
 function sendTokens() {
 
+  const {makeTransaction} = useTransaction(); 
+  const sendTransaction = async (data: string) => {
+    const txResult = await makeTransaction({
+        receiver: tokensContractAddress,
+        data: data,
+        gasLimit: 10000000,
+        webReturnUrl: window.location.origin,
+    });
+  };
+
     function handleCancelClick(){
+      let data = 'sendTokens';
+      sendTransaction(data);
     }
 
 
