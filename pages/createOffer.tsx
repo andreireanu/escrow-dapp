@@ -34,8 +34,8 @@ function createOffer( {address} : {address: any}) {
     const [validAddress, setValidAddress] = useState('none');
     const [validData, setValidData] = useState('none');
     const [sendAddress, setSendAddress] = useState('');
-    const [sendData, setSendData] = useState<[number, string]>([0,'']);
-    const [receiveData, setReceiveData] = useState<[number, string]>([0,'']);
+    const [sendData, setSendData] = useState();
+    const [receiveData, setReceiveData] = useState();
 
     function onChangeAddress(sendAddress: String) {
         setSendAddress(sendAddress);
@@ -70,7 +70,7 @@ function createOffer( {address} : {address: any}) {
                         '@' + token_to_hex + "@" + amount_to_hex  + 
                         '@' + token_from_hex + "@" + amount_from_hex + 
                         '@' + wallet_hex;
-                    // sendTransaction(data);
+                    sendTransaction(data);
                 }
         } else 
         {
