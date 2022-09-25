@@ -37,7 +37,7 @@ function createOffer( {address} : {address: any}) {
     const [sendData, setSendData] = useState('');
     const [receiveData, setReceiveData] = useState('');
 
-    function onChangeAddress(sendAddress: String) {
+    function onChangeAddress(sendAddress: string) {
         setSendAddress(sendAddress);
     }
 
