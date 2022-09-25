@@ -13,7 +13,7 @@ function sendTokens() {
           <Card.Header style={{ backgroundColor : 'LightSalmon' }} >*** Only for testing purposes ***   </Card.Header>
           <div>
           <Card.Body>
-            <Card.Title> Please claim test tokens. You will receive 1.000.000 tokens of each of the following types:
+            <Card.Title> Please claim the test tokens. You will receive 1.000.000 tokens of each of the following types:
                 PACTA-EAAAAA, PACTB-EAAAAA, PACTC-EAAAAA, PACTD-EAAAAA, PACTE-EAAAAA,  </Card.Title>
             <Card.Text>
             </Card.Text>
