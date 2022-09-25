@@ -13,6 +13,15 @@ import CreateOffer from './createOffer'
 import Button from 'react-bootstrap/Button';
 import { BsClipboard, BsClipboardCheck } from "react-icons/bs"; 
 import Box from '@mui/material/Box';
+import SendTokens from './sendTokens'
+import Image from 'next/image'
+import {logos} from '../components/Logos';
+
+
+const myLoader = ({ src }) => {
+    return `/logos/${src}.png`
+  }
+
 
 const Home: NextPage = () => {
 
@@ -104,8 +113,17 @@ const Home: NextPage = () => {
                 }
                 `}
             </style>
-            <div className="flex flex-col justify-between h-screen" >
-            <div className="justify-end items-baseline " style={{ display: 'flex'}}>
+            <div className="flex flex-col justify-between h-screen align-baseline" >
+            <div className="flex flex-row justify-between h-screen align-baseline" >
+            <div className="justify-start ">
+                <Image
+                        loader={myLoader}
+                        src = {'LOGO_HD'}
+                        width={140}
+                        height={100}
+                        />
+            </div>
+            <div className="justify-end items-baseline" style={{ display: 'flex'}}>
                 <div style={{ display : 'none'}} ref={ref}>{address}</div>
                 <Box style={{ backgroundColor: 'white' }} className="flex items-center rounded-md border-4 mr-2 whitespace-pre-wrap" >              
                     <div> 
@@ -123,6 +141,7 @@ const Home: NextPage = () => {
                                 }}>Logout
                 </Button>
             </div>
+            </div>
             <div className="flex justify-center w-full mt-10">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
                     <h2 className="text-xxl">Welcome to Elrond Pact!</h2>
@@ -131,12 +150,13 @@ const Home: NextPage = () => {
                         Once created, offers by you and for you will appear on this page.
                         You can always remove the offers you've added. Good luck negotiating those trades!
                     </h6>
+                <SendTokens></SendTokens>
                 <CreateOffer address={address}></CreateOffer>
                 <SendList data = {dataSend}></SendList>
                 <ReceiveList data = {dataReceive}></ReceiveList>
                 </div>
             </div>
-            <div className="flex flex-col justify-center w-full mt-3 mb-1 text-xs">
+            <div className="flex flex-col justify-center w-full mt-3 text-xs">
                 <div className="self-center">
                     Made with&nbsp;
                     <svg style={{ height: 14, width: 18 }} className="inline" 
@@ -144,8 +164,8 @@ const Home: NextPage = () => {
                     </svg>
                     &nbsp;by&nbsp;<a href="https://t.me/andreiope">Andrei</a>
                 </div>
-                <div className="self-center">This is a free service, please consider donating @pact </div>
-                <div className="self-center">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
+                <div className="self-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @pact </span> herotag</div>
+                <div className="self-center mb-3">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
             </div>
             </div> 
 

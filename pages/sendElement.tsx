@@ -63,8 +63,8 @@ function handleCancelClick() {
   }   
 
   return (
-    <Card style={{ width: '45rem'  }}>
-      <Card.Header style={{ backgroundColor : 'lightblue' }} >Offer for {wallet}</Card.Header>
+    <Card style={{ width: '45rem'  }} className="border-2 border-dark" >
+      <Card.Header style={{ backgroundColor : 'LightCyan' }} >Offer for {wallet}</Card.Header>
       <div>
       <Card.Body>
         <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> tokens of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the pact smart contract. </Card.Title>
@@ -77,10 +77,7 @@ function handleCancelClick() {
         <Button style={{  width: '8rem' }} variant="primary" onClick={handleCancelClick}>Remove offer</Button>
         </Card.Body>
       </div>
-
     </Card>
- 
- 
   )
 }
 
