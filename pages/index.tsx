@@ -29,7 +29,7 @@ const Home: NextPage = () => {
     const [dataReceive, setDataReceive] = useState<any | null>([]);
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref = useRef();
-    let refreshInterval = 15000;
+    let refreshInterval = 3000000;
 
     const getSend = async () => {
         const data = await querySc(
@@ -52,12 +52,13 @@ const Home: NextPage = () => {
         };
 
     useEffect(() => {
-            getSend();
-            return () => {
-              };
-        }, []);
+        const timeout = setTimeout(() => {
+            getSend() 
+            }, 500)
+            return () => clearTimeout(timeout);
+    }, []);
      
-
+ 
     const getReceive = async () => {
         const data = await querySc(
             contractAddress as string,
@@ -81,6 +82,7 @@ const Home: NextPage = () => {
     useEffect(() => {
     const intervalId = setInterval(() => { 
         getReceive();
+        console.log('UPDATE');
         return () => {
             };
         }, refreshInterval)
@@ -90,10 +92,11 @@ const Home: NextPage = () => {
     }, []);
 
     useEffect(() => {
-        getReceive();
-        return () => {
-            };
-        }, []);
+        const timeout = setTimeout(() => {
+            getReceive();
+            }, 500)
+            return () => clearTimeout(timeout);
+    }, []);
 
     function onHandleClick() {
         navigator.clipboard.writeText(ref.current.outerText);
