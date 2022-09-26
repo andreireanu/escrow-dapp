@@ -10,7 +10,7 @@ import * as config from "../config";
 import QRCode from 'qrcode';
 import Image from 'next/image'
 
-const myLoader = ({ src }) => {
+const myLoader = ({ src } : { src : string}) => {
     return `/logos/${src}.png`
   }
 

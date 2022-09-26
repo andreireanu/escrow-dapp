@@ -7,7 +7,6 @@ import {contractAddress} from "../config";
 import {useTransaction} from "../hooks/useTransaction";
 import {Address} from "@elrondnetwork/erdjs/out"; 
 
-
 function a2hex(str: String)
   {
 	var arr1 = [];
@@ -34,10 +33,10 @@ function createOffer( {address} : {address: any}) {
     const [validAddress, setValidAddress] = useState('none');
     const [validData, setValidData] = useState('none');
     const [sendAddress, setSendAddress] = useState('');
-    const [sendData, setSendData] = useState();
-    const [receiveData, setReceiveData] = useState();
+    const [sendData, setSendData] = useState<[number, string]>([0, '']);
+    const [receiveData, setReceiveData] = useState<[number, string]>([0, '']);
 
-    function onChangeAddress(sendAddress: String) {
+    function onChangeAddress(sendAddress: string) {
         setSendAddress(sendAddress);
     }
 
@@ -45,10 +44,13 @@ function createOffer( {address} : {address: any}) {
         const regex = /erd1/g;
         const found = sendAddress.match(regex);
 
+        console.log(sendAddress);
+        console.log(sendData);
+        console.log(receiveData);
+
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
-            if (sendData[0] === 0 || receiveData[0] === 0 ||
-                sendData[1] === undefined || receiveData[1] === undefined)
+            if (sendData[0] === 0 || receiveData[0] === 0)
                 {
                     setValidData('inline');
                 } else 
@@ -78,11 +80,11 @@ function createOffer( {address} : {address: any}) {
         }
     }
 
-    const passDataSend = (data) => {
+    const passDataSend = (data: any) => {
         setSendData(data);
       };
     
-    const passDataReceive = (data) => {
+    const passDataReceive = (data: any ) => {
         setReceiveData(data);
       };
 
@@ -93,10 +95,10 @@ function createOffer( {address} : {address: any}) {
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
                 <Card.Title>&nbsp;&nbsp;Swap From:  
-                <Dropdown passData={passDataSend} address={address} display_max={'block'} enforce_max={true} selected_token={receiveData}></Dropdown> 
+                <Dropdown handleCallback={passDataSend} address={address} display_max={'block'} enforce_max={true} selected_token={receiveData[1]} />
                 </Card.Title>
                 <Card.Title>&nbsp;&nbsp;Swap To:
-                <Dropdown passData={passDataReceive} address={address} display_max={'none'} enforce_max={false} selected_token={sendData} ></Dropdown> 
+                <Dropdown handleCallback={passDataReceive} address={address} display_max={'none'} enforce_max={false} selected_token={sendData[1]} ></Dropdown> 
                 </Card.Title>  
             </Card.Body>
             <Card.Body>

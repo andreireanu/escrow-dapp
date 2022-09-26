@@ -10,14 +10,23 @@ import InputNumber from 'rc-input-number';
 import Image from 'next/image'
 import {tokens} from '../components/Tokens';
 
-const myLoader = ({ src }) => {
+const myLoader = ({ src } : { src : string}) => {
   return `/tokens/${src}.png`
 }
 
-function dropdown( props: { display_max: String; address:any; enforce_max: Boolean, handleCallback: any, selected_token: String })  {
+interface IToken {
+  id: number;
+  name: string;
+  full_name: string;
+  unavailable: boolean;
+  decimals: number;
+}
+
+
+function dropdown( props: { handleCallback: any, address:any; display_max: String; enforce_max: Boolean, selected_token: string })  {
 
     let nf = new Intl.NumberFormat('en-US');
-    let unavailable_token = String(props.selected_token).split(',')[1];
+    let unavailable_token = String(props.selected_token);
 
     tokens.map((token) => {
       if (token.full_name == unavailable_token) {
@@ -27,7 +36,9 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       }
     });
 
-    const [selected, setSelected] = useState('')
+    let selected : IToken;
+    let setSelected: any;
+    [selected, setSelected] = useState({ id: 0, name: '', full_name : '', unavailable: true, decimals: 0 })
     const [balance, setBalance] = useState(0)
     const [balanceHuman, setBalanceHuman] = useState(0)
     const [value, setValue] = useState(0)
@@ -40,6 +51,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
       setValue(0);
       setBalanceHuman(0);
       setBalance(0);
+      console.log(selected);
       if (props.enforce_max) {
         if (isMounted.current) {
           const requestOptions = {
@@ -82,7 +94,7 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     }
     
     function onHandleMax() {
-      if (selected !== '') {
+      if (selected.id !== 0) {
         let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
         setValue(balance);
         setValueHuman(tempValue);
@@ -92,12 +104,12 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
     useEffect(() => {
       setValueHuman(valueHuman);
       ref.current.value = valueHuman;
-      props.passData([value, selected.full_name]);
+      props.handleCallback([value, selected.full_name]);
     }, [valueHuman])
 
     useEffect(() => {
       ref.current.value = 0;
-      props.passData([value, selected.full_name]);
+      props.handleCallback([value, selected.full_name]);
     }, [selected])
 
   return (
@@ -110,18 +122,18 @@ function dropdown( props: { display_max: String; address:any; enforce_max: Boole
             aria-hidden="true"
           />
         </span>
-        {selected ? 
+        {selected.id !== 0 ? 
             <div style={{ display: 'flex', flexDirection: "row", justifyContent: "left", alignItems: "center"}}> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <Image
+                     <Image
                           loader={myLoader}
-                          src = {selected.full_name}
+                          src = {`${selected.full_name}`}
                           width={40}
                           height={40}
-                        />
-                    <div>
+                        />  
+                     <div>
                     &nbsp;&nbsp;&nbsp;{selected.name}
-                      </div>
+                       </div>  
             </div> : 
               <div> Select token
                 </div>}

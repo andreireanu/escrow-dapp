@@ -17,7 +17,7 @@ import SendTokens from './sendTokens'
 import Image from 'next/image'
 
 
-const myLoader = ({ src }) => {
+const myLoader = ({ src } : { src : string}) => {
     return `/logos/${src}.png`
   }
 
@@ -29,7 +29,8 @@ const Home: NextPage = () => {
     const [dataReceive, setDataReceive] = useState<any | null>([]);
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref = useRef();
-    let refreshInterval = 3000000;
+    let initialDelay = 500;
+    let refreshInterval = 30000000;
 
     const getSend = async () => {
         const data = await querySc(
@@ -53,8 +54,9 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            getSend() 
-            }, 500)
+            console.log('SEND');
+            getSend() ;
+            }, initialDelay)
             return () => clearTimeout(timeout);
     }, []);
      
@@ -82,7 +84,7 @@ const Home: NextPage = () => {
     useEffect(() => {
     const intervalId = setInterval(() => { 
         getReceive();
-        console.log('UPDATE');
+        console.log('RECEIVE UPDATE');
         return () => {
             };
         }, refreshInterval)
@@ -93,8 +95,9 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
+            console.log('RECEIVE');
             getReceive();
-            }, 500)
+            }, initialDelay)
             return () => clearTimeout(timeout);
     }, []);
 
