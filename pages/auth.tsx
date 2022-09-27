@@ -84,21 +84,21 @@ const Auth: NextPage = () => {
                 <div className="flex items-center space-x-3">
                     <button
                         type="button"
-                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-blue-300 hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
+                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-[#f29a88] hover:bg-[#ec6f55] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
                         onClick={maiarClickHandler}
                     >
                         Maiar
                     </button>
                     <button
                         type="button"
-                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300"
+                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-[#c5e6d1] hover:bg-[#8bcca3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300"
                         onClick={webClickHandler}
                     >
                         Web Wallet
                     </button>
                     <button
                         type="button"
-                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-green-300 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-300"
+                        className="inline-flex items-center px-4 py-2 border-2 border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-800 bg-[#b3e4ec] hover:bg-[#84c2cd] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-300"
                         onClick={extensionClickHandler}
                     >
                         Extension
