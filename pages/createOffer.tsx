@@ -44,9 +44,11 @@ function createOffer( {address} : {address: any}) {
         const regex = /erd1/g;
         const found = sendAddress.match(regex);
 
-        console.log(sendAddress);
-        console.log(sendData);
-        console.log(receiveData);
+        console.log(sendAddress)
+        console.log(sendData[0])
+        console.log(sendData[1])
+        console.log(receiveData[0])
+        console.log(receiveData[1])
 
         if (String(found) === 'erd1' && sendAddress.length == 62){
             setValidAddress('none');
@@ -72,7 +74,7 @@ function createOffer( {address} : {address: any}) {
                         '@' + token_to_hex + "@" + amount_to_hex  + 
                         '@' + token_from_hex + "@" + amount_from_hex + 
                         '@' + wallet_hex;
-                    sendTransaction(data);
+                    // sendTransaction(data);
                 }
         } else 
         {
@@ -108,7 +110,7 @@ function createOffer( {address} : {address: any}) {
                 <div style={{ display : validData, color: 'red'}}> Please check missing swap data </div>
             </div>
             <Form>
-                <Form.Field style={{ paddingLeft: '4.6rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={e => onChangeAddress(e.target.value)}   >
+                <Form.Field style={{ paddingLeft: '4.6rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={(e: { target: { value: string; }; }) => onChangeAddress(e.target.value)}   >
                     <input className="pl-3" style={{ width: '33.5rem', height: '2.4rem', borderWidth: 1, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='Enter Address' />
                 </Form.Field>
             </Form>

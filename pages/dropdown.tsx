@@ -4,7 +4,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
 import { useLayoutEffect } from "react";
 import { network  } from "../config"; 
-import divide from 'divide-bigint' 
+// import divide from 'divide-bigint' 
 import Button from 'react-bootstrap/Button';
 import InputNumber from 'rc-input-number';
 import Image from 'next/image'
@@ -13,6 +13,8 @@ import {tokens} from '../components/Tokens';
 const myLoader = ({ src } : { src : string}) => {
   return `/tokens/${src}.png`
 }
+
+const divide: (arg0: bigint, arg1: number) => BigInt = require('divide-bigint');
 
 interface IToken {
   id: number;
@@ -40,18 +42,17 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
     let setSelected: any;
     [selected, setSelected] = useState({ id: 0, name: '', full_name : '', unavailable: true, decimals: 0 })
     const [balance, setBalance] = useState(0)
-    const [balanceHuman, setBalanceHuman] = useState(0)
+    const [balanceHuman, setBalanceHuman] = useState('')
     const [value, setValue] = useState(0)
-    const [valueHuman, setValueHuman] = useState(0)
+    const [valueHuman, setValueHuman] = useState('')
     
     const ref = useRef();
     const isMounted = useRef(false);
     useLayoutEffect(() => {
-      setValueHuman(0);
+      setValueHuman('');
       setValue(0);
-      setBalanceHuman(0);
+      setBalanceHuman('');
       setBalance(0);
-      console.log(selected);
       if (props.enforce_max) {
         if (isMounted.current) {
           const requestOptions = {
@@ -71,9 +72,12 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
               })
               .then(data => {
                 if (data['balance']) {
-                  let tempValue: number = divide(BigInt(data['balance']), Math.pow(10,Number(selected['decimals'])));
+                  let power = Math.pow(10,Number(selected['decimals']))
+                  console.log(power);
+                  let tempValue =  Number(data['balance']) / power ;
+                  console.log(typeof tempValue);
                   setBalance(data['balance']);
-                  setBalanceHuman(tempValue);
+                  setBalanceHuman(String(tempValue));
                 } 
                 }).catch(function() {
                 });
@@ -89,15 +93,16 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
         setValueHuman(balanceHuman.toLocaleString());
       } else {
         setValue(tempValue);
-        setValueHuman(valueHuman);
+        setValueHuman(String(valueHuman));
       }
     }
     
     function onHandleMax() {
       if (selected.id !== 0) {
-        let tempValue: number = divide(BigInt(balance), Math.pow(10,Number(selected['decimals'])));
+        let power = Math.pow(10,Number(selected['decimals']))
+        let tempValue = balance/power ;
         setValue(balance);
-        setValueHuman(tempValue);
+        setValueHuman(String(tempValue));
       }
     }
 
@@ -186,7 +191,7 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
          <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 
          <div className="grow" style={{ display: 'flex', flexDirection: "column" }} >
             <div style={{ display : props.display_max}} className="text-lg h-5 text-end mb-0 mb-0" >Balance: </div>
-            <div style={{ display : props.display_max}} className="text-lg h-6.3 text-end mt-0 mp-0" >{nf.format(balanceHuman.toFixed(2))} </div>
+            <div style={{ display : props.display_max}} className="text-lg h-6.3 text-end mt-0 mp-0" >{nf.format(Number(balanceHuman))} </div>
          </div>
       </div>
       {/* {value} {valueHuman} */}
