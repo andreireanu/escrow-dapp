@@ -14,7 +14,7 @@ const myLoader = ({ src } : { src : string}) => {
   return `/tokens/${src}.png`
 }
 
-const divide: (arg0: bigint, arg1: number) => BigInt = require('divide-bigint');
+// const divide: (arg0: bigint, arg1: number) => BigInt = require('divide-bigint');
 
 interface IToken {
   id: number;
@@ -25,7 +25,7 @@ interface IToken {
 }
 
 
-function dropdown( props: { handleCallback: any, address:any; display_max: String; enforce_max: Boolean, selected_token: string })  {
+function dropdown( props: { handleCallback: any, address:any; display_max: string; enforce_max: Boolean, selected_token: string })  {
 
     let nf = new Intl.NumberFormat('en-US');
     let unavailable_token = String(props.selected_token);
@@ -46,7 +46,7 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
     const [value, setValue] = useState(0)
     const [valueHuman, setValueHuman] = useState('')
     
-    const ref = useRef();
+    const ref : any = useRef();
     const isMounted = useRef(false);
     useLayoutEffect(() => {
       setValueHuman('');
@@ -73,9 +73,7 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
               .then(data => {
                 if (data['balance']) {
                   let power = Math.pow(10,Number(selected['decimals']))
-                  console.log(power);
                   let tempValue =  Number(data['balance']) / power ;
-                  console.log(typeof tempValue);
                   setBalance(data['balance']);
                   setBalanceHuman(String(tempValue));
                 } 
@@ -86,8 +84,8 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
         }
         }},[selected]);
 
-    function onHandleChange(valueHuman: number) {
-      let tempValue = valueHuman * Math.pow(10,Number(selected['decimals']));
+    function onHandleChange(valueHuman: any) {
+      let tempValue = Number(valueHuman) * Math.pow(10,Number(selected['decimals']));
       if (tempValue >= balance && props.enforce_max == true) {
         setValue(balance);
         setValueHuman(balanceHuman.toLocaleString());
@@ -118,7 +116,7 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
     }, [selected])
 
   return (
-    <Listbox style={{width: '14.5rem'}} value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={setSelected}>
     <div className="relative mt-1">
       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm h-14" >
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -185,7 +183,7 @@ function dropdown( props: { handleCallback: any, address:any; display_max: Strin
         </Listbox.Options>  
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
-        <InputNumber ref={ref} value={valueHuman>0? nf.format(valueHuman): null} onChange={(value) => onHandleChange(value)} className="form-control" min={0} max={props.enforce_max? balanceHuman: BigInt(Number.MAX_SAFE_INTEGER) } placeholder='Enter Amount'/>                
+        <InputNumber ref={ref} value={Number(valueHuman)>0? String(nf.format(Number(valueHuman))): ''} onChange={(value) => onHandleChange(value)} className="form-control" min={'0'} max={props.enforce_max? balanceHuman: String(BigInt(Number.MAX_SAFE_INTEGER)) } placeholder='Enter Amount'/>                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} >
          <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 

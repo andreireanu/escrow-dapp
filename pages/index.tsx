@@ -28,7 +28,7 @@ const Home: NextPage = () => {
     const [dataSend, setDataSend] = useState<any | null>([]);
     const [dataReceive, setDataReceive] = useState<any | null>([]);
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
-    const ref = useRef();
+    const ref : any = useRef();
     let initialDelay = 500;
     let refreshInterval = 30000000;
 

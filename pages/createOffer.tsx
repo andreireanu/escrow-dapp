@@ -123,7 +123,6 @@ function createOffer( {address} : {address: any}) {
         </div>
       </Card>
       </> 
-
     )
 }
 
