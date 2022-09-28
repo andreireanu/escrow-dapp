@@ -45,8 +45,6 @@ function createOffer( {address} : {address: any}) {
     }
 
     function onMakeOffer(){
-        const regex = /erd1/g;
-        const found = sendAddress.match(regex);
 
         console.log(sendAddress)
         console.log(sendData[0])
@@ -78,38 +76,45 @@ function createOffer( {address} : {address: any}) {
             setReceiveValidToken('')
         }
 
-        if ((String(found) === 'erd1' && sendAddress.length == 62) &&
-            ( address !== sendAddress)){
-            setValidAddress('none');
-            if (sendData[0] === 0 || receiveData[0] === 0)
-                {
-                    setValidData('inline');
-                } else 
-                {
-                    setValidData('none'); 
-                    let wallet_hex = Address.fromString(sendAddress).hex();
-                    let token_to_hex = a2hex(sendData[1])
-                    let amount_to_hex =  sendData[0].toString(16);
-                    if (amount_to_hex.length % 2 == 1) {
-                        amount_to_hex = "0" + amount_to_hex;
+        try {
+            let wallet_hex = Address.fromString(sendAddress).hex();
+            if (address !== sendAddress) {
+                setValidAddress('none');
+                if (sendData[0] === 0 || receiveData[0] === 0)
+                    {
+                        setValidData('inline');
+                    } else 
+                    {
+                        setValidData('none'); 
+                        
+                        let token_to_hex = a2hex(sendData[1])
+                        let amount_to_hex =  sendData[0].toString(16);
+                        if (amount_to_hex.length % 2 == 1) {
+                            amount_to_hex = "0" + amount_to_hex;
+                        }
+                        let token_from_hex = a2hex(receiveData[1])
+                        let amount_from_hex =  receiveData[0].toString(16);
+                        if (amount_from_hex.length % 2 == 1) {
+                            amount_from_hex = "0" + amount_from_hex;
+                        }
+                        let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
+                            '@6164644f66666572' + // addOffer function name in hex         
+                            '@' + token_to_hex + "@" + amount_to_hex  + 
+                            '@' + token_from_hex + "@" + amount_from_hex + 
+                            '@' + wallet_hex;
+                        // sendTransaction(data);
                     }
-                    let token_from_hex = a2hex(receiveData[1])
-                    let amount_from_hex =  receiveData[0].toString(16);
-                    if (amount_from_hex.length % 2 == 1) {
-                        amount_from_hex = "0" + amount_from_hex;
-                    }
-                    let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
-                        '@6164644f66666572' + // addOffer function name in hex         
-                        '@' + token_to_hex + "@" + amount_to_hex  + 
-                        '@' + token_from_hex + "@" + amount_from_hex + 
-                        '@' + wallet_hex;
-                    // sendTransaction(data);
-                }
-        } else 
-        {
+            } else 
+            {
+                setValidAddress('inline');
+                setValidData('none'); 
+            }
+          } catch (error) {
             setValidAddress('inline');
             setValidData('none'); 
-        }
+          }
+          
+
     }
 
     const passDataSend = (data: any) => {
@@ -125,7 +130,7 @@ function createOffer( {address} : {address: any}) {
         <Card style={{ width: '45rem', height: '26.5rem' }} className="border-2 border-dark" >
         <Card.Header style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
         <div>
-            <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
+            <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around", paddingBottom: '0rem'  }} >
                 <Card.Title>&nbsp;&nbsp;Swap From:  
                 <Dropdown handleCallback={passDataSend} address={address} display_max={'block'} enforce_max={true} selected_token={receiveData[1]} sendValidToken={sendValidToken} sendValidAmount={sendValidAmount}/>
                 </Card.Title>
@@ -135,13 +140,13 @@ function createOffer( {address} : {address: any}) {
             </Card.Body>
             <Card.Body>
             <div style={{ display: 'flex',  width: '38rem', flexDirection: "row", justifyContent: "space-between"}}>
-                <Card.Title  style={{ paddingLeft: '4.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;&nbsp;Offer for: </Card.Title>
+                <Card.Title  style={{ paddingLeft: '3.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;&nbsp;Offer for: </Card.Title>
                 <div style={{ display : validAddress, color: 'red'}}> Invalid address </div>
                 <div style={{ display : validData, color: 'red'}}> Please check missing swap data </div>
             </div>
             <Form>
-                <Form.Field style={{ paddingLeft: '4.6rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={(e: { target: { value: string; }; }) => onChangeAddress(e.target.value)}   >
-                    <input className="pl-3" style={{ width: '33.5rem', height: '2.4rem', borderWidth: 2, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='Enter Address' />
+                <Form.Field style={{ paddingLeft: '3.5rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={(e: { target: { value: string; }; }) => onChangeAddress(e.target.value)}   >
+                    <input className="pl-3" style={{ width: '35.9rem', height: '2.4rem', borderWidth: 2, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='Enter Address' />
                 </Form.Field>
             </Form>
             </Card.Body>
