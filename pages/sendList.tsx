@@ -14,3 +14,4 @@ function sendList( { data  } : {data : Array<String>}) {
 }
 
 export default sendList
+ 

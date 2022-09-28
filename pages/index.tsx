@@ -13,7 +13,7 @@ import CreateOffer from './createOffer'
 import Button from 'react-bootstrap/Button';
 import { BsClipboard, BsClipboardCheck } from "react-icons/bs"; 
 import Box from '@mui/material/Box';
-import SendTokens from './sendTokens'
+import GetTokens from './getTokens'
 import Image from 'next/image'
 
 
@@ -149,12 +149,12 @@ const Home: NextPage = () => {
             <div className="flex justify-center w-full mt-10">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
                     <h2 className="text-xxl">Welcome to Elrond Pact!</h2>
-                    <h6 className="pb-2">
+                    <h6 className="pb-2 text-base text-justify">
                         Swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
                         Once created, offers by you and for you will appear on this page.
                         You can always remove the offers you've added. Good luck negotiating those trades!
                     </h6>
-                <SendTokens></SendTokens>
+                <GetTokens></GetTokens>
                 <CreateOffer address={address}></CreateOffer>
                 <SendList data = {dataSend}></SendList>
                 <ReceiveList data = {dataReceive}></ReceiveList>

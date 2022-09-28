@@ -127,8 +127,8 @@ function createOffer( {address} : {address: any}) {
 
     return (
         <>
-        <Card style={{ width: '45rem', height: '26.5rem' }} className="border-2 border-dark" >
-        <Card.Header style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
+        <Card style={{ width: '45rem', height: '27rem' }} className="border-2 border-dark" >
+        <Card.Header className="text-lg" style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around", paddingBottom: '0rem'  }} >
                 <Card.Title>&nbsp;&nbsp;Swap From:  
@@ -140,7 +140,7 @@ function createOffer( {address} : {address: any}) {
             </Card.Body>
             <Card.Body>
             <div style={{ display: 'flex',  width: '38rem', flexDirection: "row", justifyContent: "space-between"}}>
-                <Card.Title  style={{ paddingLeft: '3.3rem', paddingTop: '0rem' }} > &nbsp;&nbsp;&nbsp;Offer for: </Card.Title>
+                <Card.Title  style={{ paddingLeft: '3.2rem', paddingTop: '0rem' }} > &nbsp;&nbsp;&nbsp;Offer for: </Card.Title>
                 <div style={{ display : validAddress, color: 'red'}}> Invalid address </div>
                 <div style={{ display : validData, color: 'red'}}> Please check missing swap data </div>
             </div>

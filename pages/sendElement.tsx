@@ -19,30 +19,19 @@ function hex2a(hexx: String) {
     return str;
 }
 
-
 function sendElement( {record} : {record: String}) {
-
-    const {makeTransaction} = useTransaction(); 
-    let regexConst = new RegExp(/0000000(?!0)./g);
-    const hex = Buffer.from(record, 'base64').toString('hex');
-    let splt = hex.replaceAll(regexConst, ',').split(','); 
-    let wallet = Address.fromString(splt[0]).bech32()
-    let token_to = hex2a(splt[1]);
-    let amount_to = parseInt(splt[2], 16);
-    let token_from = hex2a(splt[3]);
-    let amount_from = parseInt(splt[4], 16);
-    let decimal_to = tokens.find(token => {
-      if (token.full_name === token_to) {
-        return token;
-      }})?.decimals ;
-    let decimal_from = tokens.find(token => {
-      if (token.full_name === token_from) {
-        return token;
-      }})?.decimals ;
-    const amount_to_human = amount_to / ( Math.pow(10,Number(decimal_to))) ;
-    const amount_from_human = amount_from / ( Math.pow(10,Number(decimal_from))) ;
+    
+  let token_to : string;
+  let amount_to: number;
+  let token_from : string;
+  let amount_from: number;
+  let wallet: string;
   
-    const sendTransaction = async () => {
+  function handleCancelClick() {
+    sendTransaction();
+  }   
+  const {makeTransaction} = useTransaction(); 
+  const sendTransaction = async () => {
     await makeTransaction({
       receiver: contractAddress,
       gasLimit: 7000000,
@@ -57,14 +46,30 @@ function sendElement( {record} : {record: String}) {
         .build(),
       }); 
     }
-    
-function handleCancelClick() {
-    sendTransaction();
-  }   
+
+  try {
+    let regexConst = new RegExp(/0000000(?!0)./g);
+    const hex = Buffer.from(record, 'base64').toString('hex');
+    let splt = hex.replaceAll(regexConst, ',').split(','); 
+    wallet = Address.fromString(splt[0]).bech32()
+    token_to = hex2a(splt[1]);
+    amount_to = parseInt(splt[2], 16);
+    token_from = hex2a(splt[3]);
+    amount_from = parseInt(splt[4], 16);
+    let decimal_to = tokens.find(token => {
+      if (token.full_name === token_to) {
+        return token;
+      }})?.decimals ;
+    let decimal_from = tokens.find(token => {
+      if (token.full_name === token_from) {
+        return token;
+      }})?.decimals ;
+    const amount_to_human = amount_to / ( Math.pow(10,Number(decimal_to))) ;
+    const amount_from_human = amount_from / ( Math.pow(10,Number(decimal_from))) ;
 
   return (
-    <Card style={{ width: '45rem'  }} className="border-2 border-dark" >
-      <Card.Header style={{ backgroundColor : 'LightCyan' }} >Offer for {wallet}</Card.Header>
+    <Card style={{ width: '45rem' , display: 'flex' }} className="border-2 border-dark" >
+      <Card.Header className="text-lg" style={{ backgroundColor : 'LightCyan'}} >  Offer for {wallet}  </Card.Header>
       <div>
       <Card.Body>
         <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> tokens of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the pact smart contract. </Card.Title>
@@ -79,6 +84,10 @@ function handleCancelClick() {
       </div>
     </Card>
   )
+} catch (error) {
+   return (
+    <></>
+   )
 }
-
+}
 export default sendElement

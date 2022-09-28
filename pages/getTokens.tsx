@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/Button';
 import {tokensContractAddress} from "../config"; 
 import {useTransaction} from "../hooks/useTransaction";
 
-function sendTokens() {
+function GetTokens() {
 
   const {makeTransaction} = useTransaction(); 
   const sendTransaction = async (data: string) => {
-    const txResult = await makeTransaction({
+    await makeTransaction({
         receiver: tokensContractAddress,
         data: data,
         gasLimit: 10000000,
@@ -21,13 +21,12 @@ function sendTokens() {
       sendTransaction(data);
     }
 
-
     return (
         <Card style={{ width: '45rem' }} className="border-2 border-dark" >
-          <Card.Header style={{ backgroundColor : 'LightSalmon' }} >*** Only for testing purposes ***   </Card.Header>
+          <Card.Header className="text-lg" style={{ backgroundColor : 'LightSalmon' }} >*** Only for testing purposes ***   </Card.Header>
           <div>
           <Card.Body>
-            <Card.Title> Please claim the test tokens. You will receive 1.000.000 tokens of each of the following types:
+            <Card.Title> Please claim some testnet xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Then claim the test tokens. You will receive 1.000.000 tokens of each of the following types:
                 PACTA-EAAAAA, PACTB-EAAAAA, PACTC-EAAAAA, PACTD-EAAAAA, PACTE-EAAAAA,  </Card.Title>
             <Card.Text>
             </Card.Text>
@@ -40,4 +39,4 @@ function sendTokens() {
     )
 }
 
-export default sendTokens
+export default GetTokens
