@@ -33,6 +33,10 @@ function createOffer( {address} : {address: any}) {
     const [validAddress, setValidAddress] = useState('none');
     const [validData, setValidData] = useState('none');
     const [sendAddress, setSendAddress] = useState('');
+    const [sendValidToken, setSendValidToken] = useState('');
+    const [receiveValidToken, setReceiveValidToken] = useState('');
+    const [sendValidAmount, setSendValidAmount] = useState('');
+    const [receiveValidAmount, setReceiveValidAmount] = useState('');
     const [sendData, setSendData] = useState<[number, string]>([0, '']);
     const [receiveData, setReceiveData] = useState<[number, string]>([0, '']);
 
@@ -50,7 +54,32 @@ function createOffer( {address} : {address: any}) {
         console.log(receiveData[0])
         console.log(receiveData[1])
 
-        if (String(found) === 'erd1' && sendAddress.length == 62){
+        if (sendData[0] === 0) {
+            setSendValidAmount('red')
+        } else {
+            setSendValidAmount('')
+        }
+
+        if (receiveData[0] === 0) {
+            setReceiveValidAmount('red')
+        } else {
+            setReceiveValidAmount('')
+        }
+
+        if (sendData[1] === '') {
+            setSendValidToken('border-1 border-[#ff0000]')
+        } else {
+            setSendValidToken('')
+        }
+
+        if (receiveData[1] === '') {
+            setReceiveValidToken('border-2 border-[#ff0000]')
+        } else {
+            setReceiveValidToken('')
+        }
+
+        if ((String(found) === 'erd1' && sendAddress.length == 62) &&
+            ( address !== sendAddress)){
             setValidAddress('none');
             if (sendData[0] === 0 || receiveData[0] === 0)
                 {
@@ -79,6 +108,7 @@ function createOffer( {address} : {address: any}) {
         } else 
         {
             setValidAddress('inline');
+            setValidData('none'); 
         }
     }
 
@@ -97,10 +127,10 @@ function createOffer( {address} : {address: any}) {
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
                 <Card.Title>&nbsp;&nbsp;Swap From:  
-                <Dropdown handleCallback={passDataSend} address={address} display_max={'block'} enforce_max={true} selected_token={receiveData[1]} />
+                <Dropdown handleCallback={passDataSend} address={address} display_max={'block'} enforce_max={true} selected_token={receiveData[1]} sendValidToken={sendValidToken} sendValidAmount={sendValidAmount}/>
                 </Card.Title>
                 <Card.Title>&nbsp;&nbsp;Swap To:
-                <Dropdown handleCallback={passDataReceive} address={address} display_max={'none'} enforce_max={false} selected_token={sendData[1]} ></Dropdown> 
+                <Dropdown handleCallback={passDataReceive} address={address} display_max={'none'} enforce_max={false} selected_token={sendData[1]} sendValidToken={receiveValidToken} sendValidAmount={receiveValidAmount}></Dropdown> 
                 </Card.Title>  
             </Card.Body>
             <Card.Body>
@@ -111,7 +141,7 @@ function createOffer( {address} : {address: any}) {
             </div>
             <Form>
                 <Form.Field style={{ paddingLeft: '4.6rem', marginTop: '0rem' }} minLength={62} maxLength={62} onChange={(e: { target: { value: string; }; }) => onChangeAddress(e.target.value)}   >
-                    <input className="pl-3" style={{ width: '33.5rem', height: '2.4rem', borderWidth: 1, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='Enter Address' />
+                    <input className="pl-3" style={{ width: '33.5rem', height: '2.4rem', borderWidth: 2, borderRadius: '4px', borderColor: validAddress=='none'? 'lightgray':'red' }}    width={32} placeholder='Enter Address' />
                 </Form.Field>
             </Form>
             </Card.Body>

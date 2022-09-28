@@ -25,8 +25,8 @@ const myLoader = ({ src } : { src : string}) => {
 const Home: NextPage = () => {
 
     const {address, logout, env, balance, nonce} = useAuth();
-    const [dataSend, setDataSend] = useState<any | null>([]);
-    const [dataReceive, setDataReceive] = useState<any | null>([]);
+    const [dataSend, setDataSend] = useState<String[]>([]);
+    const [dataReceive, setDataReceive] = useState<String[]>([]);
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref : any = useRef();
     let initialDelay = 500;

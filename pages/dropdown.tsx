@@ -25,7 +25,7 @@ interface IToken {
 }
 
 
-function dropdown( props: { handleCallback: any, address:any; display_max: string; enforce_max: Boolean, selected_token: string })  {
+function dropdown( props: { handleCallback: any, address:any; display_max: string; enforce_max: Boolean, selected_token: string, sendValidToken: string, sendValidAmount: string })  {
 
     let nf = new Intl.NumberFormat('en-US');
     let unavailable_token = String(props.selected_token);
@@ -118,10 +118,10 @@ function dropdown( props: { handleCallback: any, address:any; display_max: strin
   return (
     <Listbox value={selected} onChange={setSelected}>
     <div className="relative mt-1">
-      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm h-14" >
+      <Listbox.Button style={{ borderWidth: 2}} className={"relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm h-14 " + props.sendValidToken}  >
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <SelectorIcon
-            className="h-5 w-5 text-gray-400"
+            className="h-5 w-5 text-gray-400 "
             aria-hidden="true"
           />
         </span>
@@ -183,7 +183,7 @@ function dropdown( props: { handleCallback: any, address:any; display_max: strin
         </Listbox.Options>  
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
-        <InputNumber ref={ref} value={Number(valueHuman)>0? String(nf.format(Number(valueHuman))): ''} onChange={(value) => onHandleChange(value)} className="form-control" min={'0'} max={props.enforce_max? balanceHuman: String(BigInt(Number.MAX_SAFE_INTEGER)) } placeholder='Enter Amount'/>                
+        <InputNumber style={{ borderWidth: 2, borderColor: props.sendValidAmount}} ref={ref} value={Number(valueHuman)>0? String(nf.format(Number(valueHuman))): ''} onChange={(value) => onHandleChange(value)} className="form-control" min={'0'} max={props.enforce_max? balanceHuman: String(BigInt(Number.MAX_SAFE_INTEGER)) } placeholder='Enter Amount' />                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} >
          <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 
