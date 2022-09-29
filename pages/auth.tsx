@@ -41,6 +41,7 @@ const Auth: NextPage = () => {
     const maiarClickHandler = async () => {
         const uri = await login(AuthProviderType.MAIAR);
         const qrCode = await QRCode.toString(uri, {type: "svg"});
+        console.log('maiar config " ' +  config.walletConnectDeepLink );
         const authUri = `${config.walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`;
         setAuthQrCode(qrCode);
         setMaiarAuthUri(authUri);
