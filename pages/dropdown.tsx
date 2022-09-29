@@ -25,7 +25,7 @@ interface IToken {
 }
 
 
-function dropdown( props: { handleCallback: any, address:any; display_max: string; enforce_max: Boolean, selected_token: string, sendValidToken: string, sendValidAmount: string })  {
+function Dropdown( props: { handleCallback: any, address:any; display_max: string; enforce_max: Boolean, selected_token: string, sendValidToken: string, sendValidAmount: string })  {
 
     let nf = new Intl.NumberFormat('en-US');
     let unavailable_token = String(props.selected_token);
@@ -199,6 +199,6 @@ function dropdown( props: { handleCallback: any, address:any; display_max: strin
 
 }
 
-export default dropdown
+export default Dropdown
 
  

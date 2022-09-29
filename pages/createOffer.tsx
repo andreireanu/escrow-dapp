@@ -18,7 +18,7 @@ function a2hex(str: String)
 	return arr1.join('');
    }
 
-function createOffer( {address} : {address: any}) {
+function CreateOffer( {address} : {address: any}) {
 
     const {makeTransaction} = useTransaction(); 
     const sendTransaction = async (data: string) => {
@@ -165,4 +165,4 @@ function createOffer( {address} : {address: any}) {
     )
 }
 
-export default createOffer
+export default CreateOffer

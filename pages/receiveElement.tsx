@@ -16,7 +16,7 @@ function hex2a(hexx: String) {
     return str;
 }
 
-function receiveElement( {record} : {record: String}) {
+function ReceiveElement( {record} : {record: String}) {
 
 
   const {makeTransaction} = useTransaction(); 
@@ -96,6 +96,6 @@ function receiveElement( {record} : {record: String}) {
 }
 }
 
-export default receiveElement
+export default ReceiveElement
 
  

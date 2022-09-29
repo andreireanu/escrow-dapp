@@ -3,7 +3,7 @@ import ReceiveElement from './receiveElement'
 
 
 
-function receiveList( { data  } : {data : Array<String>}) {
+function ReceiveList( { data  } : {data : Array<String>}) {
 
   if (typeof data !== 'undefined') {
     return (
@@ -17,4 +17,4 @@ function receiveList( { data  } : {data : Array<String>}) {
     }
 }
 
-export default receiveList
+export default ReceiveList

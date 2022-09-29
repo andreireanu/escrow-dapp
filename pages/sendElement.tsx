@@ -19,7 +19,7 @@ function hex2a(hexx: String) {
     return str;
 }
 
-function sendElement( {record} : {record: String}) {
+function SendElement( {record} : {record: String}) {
     
   let token_to : string;
   let amount_to: number;
@@ -90,4 +90,4 @@ function sendElement( {record} : {record: String}) {
    )
 }
 }
-export default sendElement
+export default SendElement

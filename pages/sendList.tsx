@@ -1,7 +1,7 @@
 import React from 'react'
 import SendElement from './sendElement'
 
-function sendList( { data  } : {data : Array<String>}) {
+function SendList( { data  } : {data : Array<String>}) {
      if (typeof data !== 'undefined') {
      return (
        <> {data.map((record: any) => 
@@ -13,5 +13,5 @@ function sendList( { data  } : {data : Array<String>}) {
      }
 }
 
-export default sendList
+export default SendList
  
