@@ -33,6 +33,7 @@ const Home: NextPage = () => {
     let refreshInterval = 30000000;
 
     const getSend = async () => {
+        console.log(env)
         const data = await querySc(
             contractAddress as string,
             "getSendData",
@@ -54,7 +55,6 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            console.log('SEND');
             getSend() ;
             }, initialDelay)
             return () => clearTimeout(timeout);
@@ -84,7 +84,6 @@ const Home: NextPage = () => {
     useEffect(() => {
     const intervalId = setInterval(() => { 
         getReceive();
-        console.log('RECEIVE UPDATE');
         return () => {
             };
         }, refreshInterval)
@@ -95,7 +94,6 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            console.log('RECEIVE');
             getReceive();
             }, initialDelay)
             return () => clearTimeout(timeout);

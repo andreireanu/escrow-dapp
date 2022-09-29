@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@elastic/eui": "^66.0.0",
+    "@elastic/eui": "^27.4.1",
     "@elrond-giants/erd-react-hooks": "^0.2.1",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
