@@ -112,6 +112,10 @@ function createOffer( {address} : {address: any}) {
           } catch (error) {
             setValidAddress('inline');
             setValidData('none'); 
+            setSendValidAmount('')
+            setReceiveValidAmount('')
+            setSendValidToken('')
+            setReceiveValidToken('')
           }
           
 
