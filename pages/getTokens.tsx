@@ -17,7 +17,7 @@ function GetTokens() {
   };
 
     function handleCancelClick(){
-      let data = 'sendTokens';
+      let data = 'getTokens';
       sendTransaction(data);
     }
 
