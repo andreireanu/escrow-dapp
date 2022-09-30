@@ -78,7 +78,7 @@ const Auth: NextPage = () => {
                         height={250}
                         />
                 <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
-                    Please connect your wallet to use the Elond Pact service
+                    Please connect your wallet to use the Elrond Peer Pact service
                 </h2>
                 <p className="text-2xl">Pick a login method</p>
                 <div className="flex items-center space-x-3">

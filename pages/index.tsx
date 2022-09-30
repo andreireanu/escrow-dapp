@@ -166,7 +166,7 @@ const Home: NextPage = () => {
                     </svg>
                     &nbsp;by&nbsp;<a href="https://t.me/andreiope">Andrei</a>
                 </div>
-                <div className="self-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @pact </span> herotag</div>
+                <div className="self-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @peerpact </span> herotag</div>
                 <div className="self-center mb-3">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
             </div>
             </div> 
