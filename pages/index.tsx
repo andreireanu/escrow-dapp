@@ -30,10 +30,9 @@ const Home: NextPage = () => {
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref : any = useRef();
     let initialDelay = 500;
-    let refreshInterval = 30000000;
+    let refreshInterval = 20000000;
 
     const getSend = async () => {
-        console.log(env)
         const data = await querySc(
             contractAddress as string,
             "getSendData",
@@ -146,7 +145,7 @@ const Home: NextPage = () => {
             </div>
             <div className="flex justify-center w-full mt-10">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
-                    <h2 className="text-xxl">Welcome to Elrond Pact!</h2>
+                    <h2 className="text-xxl">Welcome to Elrond Peer Pact!</h2>
                     <h6 className="pb-2 text-base text-justify">
                         Swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
                         Once created, offers by you and for you will appear on this page.
@@ -168,7 +167,8 @@ const Home: NextPage = () => {
                 </div>
                 <div className="self-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @peerpact </span> herotag</div>
                 <div className="self-center mb-3">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
-            </div>
+            </div>http://localhost:3000
+
             </div> 
 
         </RequiresAuth>

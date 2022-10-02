@@ -7,6 +7,7 @@ import {useTransaction} from "../hooks/useTransaction";
 // import {webWalletTxReturnPath } from '../utils/routes';
 import {contractAddress} from "../config"; 
 import {tokens} from '../components/Tokens';
+import {chainId} from "../config"; 
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -18,7 +19,7 @@ function hex2a(hexx: String) {
 
 function ReceiveElement( {record} : {record: String}) {
 
-
+  let nf = new Intl.NumberFormat('en-US');
   const {makeTransaction} = useTransaction(); 
 
   let token_to : string;
@@ -46,6 +47,7 @@ function ReceiveElement( {record} : {record: String}) {
         receiver: contractAddress,
         data: data,
         gasLimit: 10000000,
+        chainId: chainId,
         webReturnUrl: window.location.origin,
     });
   };
@@ -79,8 +81,8 @@ function ReceiveElement( {record} : {record: String}) {
      <Card style={{ width: '45rem' }} className="border-2 border-dark" >
       <Card.Header className="text-lg" style={{ backgroundColor : 'PeachPuff' }} >Offer from {wallet}</Card.Header>
       <Card.Body style={{ display: 'flex', flexDirection: "column", justifyContent: "space-evenly", paddingBottom: '0rem' }} >
-        <Card.Title> You will send <span style={{ color : 'Coral' }} > {amount_to_human} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the pact smart contract. </Card.Title>
-        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {amount_from_human} </span> tokens of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately. </Card.Title>
+        <Card.Title> You will send <span style={{ color : 'Coral' }} > {nf.format(amount_to_human)} </span> tokens of type  <span style={{ color : 'Coral' }} >{token_to} </span> to the peer pact smart contract. </Card.Title>
+        <Card.Title> You will receive <span style={{ color : 'Coral' }}> {nf.format(amount_from_human)} </span> tokens of type <span style={{ color : 'Coral' }} >{token_from} </span> in exchange immediately. </Card.Title>
         <Card.Text>
         </Card.Text>
       </Card.Body>

@@ -1,11 +1,9 @@
 export const tokens = [
-    { id: 1, name: 'ESC1', full_name : 'ESC1-492f2b', unavailable: false, decimals: 18 },
-    { id: 2, name: 'ESC2', full_name : 'ESC2-83fea1', unavailable: false, decimals: 18 },
-    { id: 3, name: 'ESC3', full_name : 'ESC3-a5537c', unavailable: false, decimals: 18 },
-    { id: 4, name: 'ESC4', full_name : 'ESC4-eaaef2', unavailable: false, decimals: 18 },
-    { id: 5, name: 'ESC5', full_name : 'ESC5-9beff6', unavailable: false, decimals: 6  }, 
-    { id: 6, name: 'ESC7', full_name : 'ESC7-ebd15d', unavailable: false, decimals: 12 }, 
-    { id: 7, name: 'ESC8', full_name : 'ESC8-8e6d25', unavailable: false, decimals: 9 } 
+    { id: 1, name: 'PACT A', full_name : 'PACTA-4f2ce1', unavailable: false, decimals: 18 },
+    { id: 2, name: 'PACT B', full_name : 'PACTB-f38508', unavailable: false, decimals: 18 },
+    { id: 3, name: 'PACT C', full_name : 'PACTC-8d182e', unavailable: false, decimals: 18 },
+    { id: 4, name: 'PACT D', full_name : 'PACTD-34f53e', unavailable: false, decimals: 12 },
+    { id: 5, name: 'PACT E', full_name : 'PACTE-3305fb', unavailable: false, decimals: 6  }, 
   ]
 
 

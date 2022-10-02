@@ -10,6 +10,7 @@ import {useTransaction} from "../hooks/useTransaction";
 import {TransactionPayload} from "@elrondnetwork/erdjs/out";
 import {contractAddress} from "../config"; 
 import {tokens} from '../components/Tokens';
+import {chainId} from "../config"; 
 
 function hex2a(hexx: String) {
     var hex = hexx.toString();//force conversion
@@ -21,6 +22,7 @@ function hex2a(hexx: String) {
 
 function SendElement( {record} : {record: String}) {
     
+  let nf = new Intl.NumberFormat('en-US');
   let token_to : string;
   let amount_to: number;
   let token_from : string;
@@ -35,6 +37,7 @@ function SendElement( {record} : {record: String}) {
     await makeTransaction({
       receiver: contractAddress,
       gasLimit: 7000000,
+      chainId: chainId,
       data: 
         TransactionPayload.contractCall()
         .setFunction(new ContractFunction("removeOffer"))
@@ -72,8 +75,8 @@ function SendElement( {record} : {record: String}) {
       <Card.Header className="text-lg" style={{ backgroundColor : 'LightCyan'}} >  Offer for {wallet}  </Card.Header>
       <div>
       <Card.Body>
-        <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{amount_to_human} </span> tokens of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the pact smart contract. </Card.Title>
-        <Card.Title> You will receive <span style={{ color : 'DarkCyan' }} > {amount_from_human} </span> tokens of type <span style={{ color : 'DarkCyan' }} > {token_from} </span> in exchange 
+        <Card.Title> You sent <span style={{ color : 'DarkCyan' }} >{nf.format(amount_to_human)} </span> tokens of type  <span style={{ color : 'DarkCyan' }} >{token_to} </span> to the peer pact smart contract. </Card.Title>
+        <Card.Title> You will receive <span style={{ color : 'DarkCyan' }} > {nf.format(amount_from_human)} </span> tokens of type <span style={{ color : 'DarkCyan' }} > {token_from} </span> in exchange 
           when the peer wallet accepts your offer. </Card.Title>
         <Card.Text>
         </Card.Text>

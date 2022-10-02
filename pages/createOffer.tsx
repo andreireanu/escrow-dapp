@@ -1,3 +1,6 @@
+// IMPORTANT:
+// For number conversion check: 
+// https://stackoverflow.com/questions/10943997/how-to-convert-a-string-containing-scientific-notation-to-correct-javascript-num
 import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card';
 import Dropdown from './dropdown'
@@ -6,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import {contractAddress} from "../config"; 
 import {useTransaction} from "../hooks/useTransaction";
 import {Address} from "@elrondnetwork/erdjs/out"; 
+import {chainId} from "../config"; 
 
 function a2hex(str: String)
   {
@@ -26,6 +30,7 @@ function CreateOffer( {address} : {address: any}) {
             receiver: contractAddress,
             data: data,
             gasLimit: 10000000,
+            chainId: chainId,
             webReturnUrl: window.location.origin,
         });
       };
@@ -37,8 +42,8 @@ function CreateOffer( {address} : {address: any}) {
     const [receiveValidToken, setReceiveValidToken] = useState('');
     const [sendValidAmount, setSendValidAmount] = useState('');
     const [receiveValidAmount, setReceiveValidAmount] = useState('');
-    const [sendData, setSendData] = useState<[number, string]>([0, '']);
-    const [receiveData, setReceiveData] = useState<[number, string]>([0, '']);
+    const [sendData, setSendData] = useState<[number, String]>([0, '']);
+    const [receiveData, setReceiveData] = useState<[number, String]>([0, '']);
 
     function onChangeAddress(sendAddress: string) {
         setSendAddress(sendAddress);
@@ -86,23 +91,29 @@ function CreateOffer( {address} : {address: any}) {
                     } else 
                     {
                         setValidData('none'); 
-                        
-                        let token_to_hex = a2hex(sendData[1])
-                        let amount_to_hex =  sendData[0].toString(16);
+                        console.log('--');
+                        console.log(sendData[0]);
+                        let token_to_hex = a2hex(sendData[1]);
+                        let amount_to_Expanded =  sendData[0].toLocaleString('fullwide', {useGrouping:false});
+                        let amount_to_hex = BigInt(amount_to_Expanded).toString(16);
+                        console.log(amount_to_hex);
                         if (amount_to_hex.length % 2 == 1) {
                             amount_to_hex = "0" + amount_to_hex;
                         }
                         let token_from_hex = a2hex(receiveData[1])
-                        let amount_from_hex =  receiveData[0].toString(16);
+                        let amount_from_Expanded = receiveData[0].toLocaleString('fullwide', {useGrouping:false});
+                        let amount_from_hex = BigInt(amount_from_Expanded).toString(16);
                         if (amount_from_hex.length % 2 == 1) {
                             amount_from_hex = "0" + amount_from_hex;
                         }
+                        console.log(amount_from_hex);
+                        console.log('--');
                         let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
                             '@6164644f66666572' + // addOffer function name in hex         
                             '@' + token_to_hex + "@" + amount_to_hex  + 
                             '@' + token_from_hex + "@" + amount_from_hex + 
                             '@' + wallet_hex;
-                        // sendTransaction(data);
+                        sendTransaction(data);
                     }
             } else 
             {

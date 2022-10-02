@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import {tokensContractAddress} from "../config"; 
 import {useTransaction} from "../hooks/useTransaction";
+import {chainId} from "../config"; 
 
 function GetTokens() {
 
@@ -12,6 +13,7 @@ function GetTokens() {
         receiver: tokensContractAddress,
         data: data,
         gasLimit: 10000000,
+        chainId: chainId,
         webReturnUrl: window.location.origin,
     });
   };
@@ -23,11 +25,11 @@ function GetTokens() {
 
     return (
         <Card style={{ width: '45rem' }} className="border-2 border-dark" >
-          <Card.Header className="text-lg" style={{ backgroundColor : 'LightSalmon' }} >*** Only for testing purposes ***   </Card.Header>
+          <Card.Header className="text-lg" style={{ backgroundColor : 'LightSalmon' }} >*** Instructions for testing ***   </Card.Header>
           <div>
           <Card.Body>
-            <Card.Title> Please claim some testnet xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Then claim the test tokens. You will receive 1.000.000 tokens of each of the following types:
-                PACTA-EAAAAA, PACTB-EAAAAA, PACTC-EAAAAA, PACTD-EAAAAA, PACTE-EAAAAA,  </Card.Title>
+            <Card.Title> Please claim 1 xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Once you receive it claim the test tokens. You will receive 1,000,000 tokens of each of the following types:
+            PACTA-4f2ce1, PACTB-f38508, PACTC-8d182e, PACTD-34f53e and PACTE-3305fb which you can use to test the dApp.  </Card.Title>
             <Card.Text>
             </Card.Text>
           </Card.Body>
