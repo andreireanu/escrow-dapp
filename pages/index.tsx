@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import GetTokens from './getTokens'
 import Image from 'next/image'
 
-
+import { useMediaPredicate } from "react-media-hook";
 const myLoader = ({ src } : { src : string}) => {
     return `/logos/${src}.png`
   }
@@ -106,11 +106,14 @@ const Home: NextPage = () => {
           }, 1000);
     }
 
+    const biggerThan400 = useMediaPredicate("(min-width: 400px)");
+
     return (
         <RequiresAuth  >
             <style jsx global>{`
                 body {
                     background: ${"Snow"};
+                    font-family: 'Battambang';
                 }
                 `}
             </style>
@@ -167,10 +170,8 @@ const Home: NextPage = () => {
                 </div>
                 <div className="self-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @peerpact </span> herotag</div>
                 <div className="self-center mb-3">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
-            </div>http://localhost:3000
-
             </div> 
-
+            </div> 
         </RequiresAuth>
     );
 };

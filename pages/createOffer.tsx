@@ -51,11 +51,11 @@ function CreateOffer( {address} : {address: any}) {
 
     function onMakeOffer(){
 
-        console.log(sendAddress)
-        console.log(sendData[0])
-        console.log(sendData[1])
-        console.log(receiveData[0])
-        console.log(receiveData[1])
+        // console.log(sendAddress)
+        // console.log(sendData[0])
+        // console.log(sendData[1])
+        // console.log(receiveData[0])
+        // console.log(receiveData[1])
 
         if (sendData[0] === 0) {
             setSendValidAmount('red')
@@ -91,12 +91,9 @@ function CreateOffer( {address} : {address: any}) {
                     } else 
                     {
                         setValidData('none'); 
-                        console.log('--');
-                        console.log(sendData[0]);
                         let token_to_hex = a2hex(sendData[1]);
                         let amount_to_Expanded =  sendData[0].toLocaleString('fullwide', {useGrouping:false});
                         let amount_to_hex = BigInt(amount_to_Expanded).toString(16);
-                        console.log(amount_to_hex);
                         if (amount_to_hex.length % 2 == 1) {
                             amount_to_hex = "0" + amount_to_hex;
                         }
@@ -106,8 +103,6 @@ function CreateOffer( {address} : {address: any}) {
                         if (amount_from_hex.length % 2 == 1) {
                             amount_from_hex = "0" + amount_from_hex;
                         }
-                        console.log(amount_from_hex);
-                        console.log('--');
                         let data = 'ESDTTransfer@' + token_to_hex + "@" + amount_to_hex + 
                             '@6164644f66666572' + // addOffer function name in hex         
                             '@' + token_to_hex + "@" + amount_to_hex  + 
