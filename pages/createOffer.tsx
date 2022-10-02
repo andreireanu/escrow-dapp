@@ -137,7 +137,7 @@ function CreateOffer( {address} : {address: any}) {
 
     return (
         <>
-        <Card style={{ width: '45rem', height: '27rem' }} className="border-2 border-dark" >
+        <Card style={{ width: '45rem', height: '27rem' }} className="border-2 border-dark " >
         <Card.Header className="text-lg" style={{ backgroundColor: "#86EFAC" }} >Add offer  </Card.Header>
         <div>
             <Card.Body style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around", paddingBottom: '0rem'  }} >

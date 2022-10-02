@@ -113,13 +113,13 @@ const Home: NextPage = () => {
             <style jsx global>{`
                 body {
                     background: ${"Snow"};
-                    font-family: 'Battambang';
+                    font-family: 'Fira Sans';
                 }
                 `}
             </style>
             <div className="flex flex-col justify-between h-screen align-baseline" >
             <div className="flex flex-row justify-between h-screen align-baseline" >
-            <div className="justify-start ">
+            <div >
                 <Image
                         loader={myLoader}
                         src = {'LOGO_HD'}
