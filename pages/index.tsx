@@ -16,7 +16,6 @@ import Box from '@mui/material/Box';
 import GetTokens from './getTokens'
 import Image from 'next/image'
 
-import { useMediaPredicate } from "react-media-hook";
 const myLoader = ({ src } : { src : string}) => {
     return `/logos/${src}.png`
   }
@@ -30,7 +29,7 @@ const Home: NextPage = () => {
     const [clipboardDisplay, setClipboardDisplay] = useState(true);
     const ref : any = useRef();
     let initialDelay = 500;
-    let refreshInterval = 20000000;
+    let refreshInterval = 20000;
 
     const getSend = async () => {
         const data = await querySc(
@@ -51,6 +50,18 @@ const Home: NextPage = () => {
             });
         };
         };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => { 
+            getSend();
+            return () => {
+                };
+            }, refreshInterval)
+            return () =>  {
+            clearInterval(intervalId);
+            }
+        }, []);
+    
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -106,19 +117,17 @@ const Home: NextPage = () => {
           }, 1000);
     }
 
-    const biggerThan400 = useMediaPredicate("(min-width: 400px)");
-
     return (
         <RequiresAuth  >
             <style jsx global>{`
                 body {
                     background: ${"Snow"};
-                    font-family: 'Fira Sans';
+                    font-family: 'Fira Sans Book';
                 }
                 `}
             </style>
-            <div className="flex flex-col justify-between h-screen align-baseline" >
-            <div className="flex flex-row justify-between h-screen align-baseline" >
+            <div className="flex flex-col justify-between h-screen align-baseline" style={{ minWidth: '47rem' , minHeight: '100%'}}  >
+            <div className="flex flex-row justify-between align-baseline" >
             <div >
                 <Image
                         loader={myLoader}
@@ -148,8 +157,8 @@ const Home: NextPage = () => {
             </div>
             <div className="flex justify-center w-full mt-10">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
-                    <h2 className="text-xxl">Welcome to Elrond Peer Pact!</h2>
-                    <h6 className="pb-2 text-base text-justify">
+                    <h2 className="text-xxl font-semibold">Welcome to Elrond Peer Pact!</h2>
+                    <h6 className="pb-2 text-base text-justify font-semibold">
                         Swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
                         Once created, offers by you and for you will appear on this page.
                         You can always remove the offers you've added. Good luck negotiating those trades! <br></br>
@@ -160,17 +169,22 @@ const Home: NextPage = () => {
                 <ReceiveList data = {dataReceive}></ReceiveList>
                 </div>
             </div>
-            <div className="flex flex-col justify-center w-full mt-3 text-xs">
-                <div className="self-center">
-                    Made with&nbsp;
-                    <svg style={{ height: 14, width: 18 }} className="inline" 
-                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z" ></path>
-                    </svg>
-                    &nbsp;by&nbsp;<a href="https://t.me/andreiope">Andrei</a>
-                </div>
-                <div className="self-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @peerpact </span> herotag</div>
-                <div className="self-center mb-3">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
-            </div> 
+            <footer className="">
+                    <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400"> 
+                    <div className="flex flex-col justify-center w-full mt-3 text-xs">
+                        <div className="self-center">
+                            Made with&nbsp;
+                            <svg style={{ height: 14, width: 18 }} className="inline" 
+                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="red" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z" ></path>
+                            </svg>
+                            &nbsp;by&nbsp;<a href="https://t.me/andreiope">Andrei</a>
+                        </div>
+                        <div className="self-center text-center">This is a free service, please consider making donations  <span style={{ color : 'blue' }} > @peerpact </span> herotag</div>
+                        <div className="self-center mb-3 text-center">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
+                    </div> 
+                    </span>
+                </footer>
             </div> 
         </RequiresAuth>
     );
