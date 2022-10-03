@@ -180,7 +180,7 @@ function Dropdown( props: { handleCallback: any, address:any; display_max: strin
         </Listbox.Options>  
       </Transition>
       <div style={{ paddingTop : '1rem', paddingBottom: '1rem' }} >
-        <InputNumber style={{ borderWidth: 2, borderColor: props.sendValidAmount}} ref={ref} value={Number(valueHuman)>0? String(nf.format(Number(valueHuman),10)): ''} onChange={(value) => onHandleChange(value)} className="form-control" min={'0'} max={props.enforce_max? balanceHuman: String(BigInt(Number.MAX_SAFE_INTEGER)) } placeholder='Enter Amount' />                
+        <InputNumber style={{ borderWidth: 2, borderColor: props.sendValidAmount}} ref={ref} value={Number(valueHuman)>0? String(nf.format(Number(valueHuman))): ''} onChange={(value) => onHandleChange(value)} className="form-control" min={'0'} max={props.enforce_max? balanceHuman: String(BigInt(Number.MAX_SAFE_INTEGER)) } placeholder='Enter Amount' />                
       </div>
       <div style={{ display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center" }} >
          <Button style={{ display : props.display_max}} onFocus={(e:any) => (e.target.blur())} onClick = {onHandleMax} variant="primary"> Max </Button> 
