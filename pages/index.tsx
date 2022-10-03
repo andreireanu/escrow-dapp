@@ -126,7 +126,7 @@ const Home: NextPage = () => {
                 }
                 `}
             </style>
-            <div className="flex flex-col justify-between h-screen align-baseline" style={{ minWidth: '47rem' , minHeight: '100%'}}  >
+            <div className="flex flex-col h-screen" style={{ minWidth: '47rem' , minHeight: '100%'}}  >
             <div className="flex flex-row justify-between align-baseline" >
             <div >
                 <Image
@@ -169,9 +169,10 @@ const Home: NextPage = () => {
                 <ReceiveList data = {dataReceive}></ReceiveList>
                 </div>
             </div>
-            <footer className="">
+ 
+            <footer style={{ minWidth: '47rem' }}>
                     <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400"> 
+                    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400 bottom-0"> 
                     <div className="flex flex-col justify-center w-full mt-3 text-xs">
                         <div className="self-center">
                             Made with&nbsp;
@@ -184,8 +185,19 @@ const Home: NextPage = () => {
                         <div className="self-center mb-3 text-center">This dApp uses open-source code provided by the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team</div>
                     </div> 
                     </span>
-                </footer>
-            </div> 
+            </footer>
+
+        </div> 
+
+
+
+
+
+
+
+
+
+        
         </RequiresAuth>
     );
 };

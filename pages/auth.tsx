@@ -69,8 +69,14 @@ const Auth: NextPage = () => {
     }
 
     return (
-        <> <div style={{ backgroundColor: 'Snow'}} > </div>
-            <div className="flex flex-col items-center justify-center space-y-4 min-h-half-screen pt-16">
+        <>  <style jsx global>{`
+                    body {
+                        background: ${"Snow"};
+                        font-family: 'Fira Sans Book';
+                    }
+                    `}
+                </style>
+            <div className="flex flex-col items-center justify-center space-y-4 min-h-half-screen pt-16" style={{ minWidth: '47rem' }}>
                 <Image
                         loader={myLoader}
                         src = {'LOGO_HD'}
