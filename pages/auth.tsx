@@ -83,6 +83,7 @@ const Auth: NextPage = () => {
                         width={350}
                         height={250}
                         />
+                <p className="text-2xl font-bold" style={{   color: 'red'}}>TESTNET VERSION</p>
                 <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
                     Please connect your wallet to use the Elrond Peer Pact service
                 </h2>
