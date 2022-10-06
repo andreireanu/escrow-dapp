@@ -83,11 +83,13 @@ const Auth: NextPage = () => {
                         width={350}
                         height={250}
                         />
-                <p className="text-2xl font-bold" style={{   color: 'red'}}>TESTNET VERSION</p>
                 <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
-                    Please connect your wallet to use the Elrond Peer Pact service
+                    Swap Elrond ESDT Tokens for FREE!
                 </h2>
-                <p className="text-2xl">Pick a login method</p>
+                <h3 className="text-2xl text-center" style={{ width: '40rem' }}>
+                    Please connect your wallet to use the Elrond Peer Pact service
+                </h3>
+                <p className="text-xl">Pick a login method</p>
                 <div className="flex items-center space-x-3">
                     <button
                         type="button"
@@ -125,6 +127,7 @@ const Auth: NextPage = () => {
                         Ledger
                     </button> */}
                 </div>
+                <p className="text-2xl font-bold" style={{   color: 'red'}}>TESTNET VERSION</p>
                 {ledgerAccounts.length > 0 && <div className="flex items-center">
                     <span>Select ledger account</span>
                     <select
