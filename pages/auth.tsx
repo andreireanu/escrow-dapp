@@ -81,7 +81,7 @@ const Auth: NextPage = () => {
                         loader={myLoader}
                         src = {'LOGO_HD'}
                         width={350}
-                        height={250}
+                        height={248}
                         />
                 <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
                     Swap Elrond ESDT Tokens for FREE!
