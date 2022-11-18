@@ -84,10 +84,10 @@ const Auth: NextPage = () => {
                         height={248}
                         />
                 <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
-                    Swap Elrond ESDT Tokens for FREE!
+                    Swap  ESDT Tokens for FREE!
                 </h2>
                 <h3 className="text-2xl text-center" style={{ width: '40rem' }}>
-                    Please connect your wallet to use the Elrond Peer Pact service
+                    Please connect your wallet to use the MultiversX Peer Pact service
                 </h3>
                 <p className="text-xl">Pick a login method</p>
                 <div className="flex items-center space-x-3">

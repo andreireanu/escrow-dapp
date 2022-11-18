@@ -28,7 +28,7 @@ function GetTokens() {
           <Card.Header className="text-lg" style={{ backgroundColor : 'LightSalmon' }} >*** Instructions for testing ***   </Card.Header>
           <div>
           <Card.Body>
-            <Card.Title> Please claim 0.2 xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Once you receive it claim the test tokens. You will receive 1,000,000 tokens of each of the following types:
+            <Card.Title> Please claim 1 xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Once you receive it claim the test tokens. You will receive 1,000,000 tokens of each of the following types:
             PACTA-4f2ce1, PACTB-f38508, PACTC-8d182e, PACTD-34f53e and PACTE-3305fb which you can use to test the dApp.  </Card.Title>
             <Card.Text>
             </Card.Text>

@@ -3,6 +3,6 @@ src="/public/logos/LOGO_HD_Img.png" >
 
 ## Peer Pact Exchange dApp template 
 
-Use this dApp to swap Elrond ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply. Find it here: [https://peerpact.exchange/](https://peerpact.exchange/). 
+Use this dApp to swap MultiversX ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply. Find it here: [https://peerpact.exchange/](https://peerpact.exchange/). 
 Many thanks to the wonderful <a href="https://elrondgiants.com/">Elrond Giants</a> team who provided the login template. 
 
