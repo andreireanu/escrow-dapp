@@ -19,7 +19,7 @@ function GetTokens() {
   };
 
     function handleCancelClick(){
-      let data = 'getTokens';
+      let data = 'sendTokens';
       sendTransaction(data);
     }
 
@@ -29,7 +29,7 @@ function GetTokens() {
           <div>
           <Card.Body>
             <Card.Title> Please claim 1 xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Once you receive it claim the test tokens. You will receive 1,000,000 tokens of each of the following types:
-            PACTA-4f2ce1, PACTB-f38508, PACTC-8d182e, PACTD-34f53e and PACTE-3305fb which you can use to test the dApp.  </Card.Title>
+            PACTA-153996, PACTB-313c12, PACTC-f05a55, PACTD-febac3 and PACTE-1312db which you can use to test the dApp.  </Card.Title>
             <Card.Text>
             </Card.Text>
           </Card.Body>

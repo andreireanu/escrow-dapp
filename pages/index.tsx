@@ -157,7 +157,8 @@ const Home: NextPage = () => {
             </div>
             <div className="flex justify-center w-full mt-10">
                 <div style={{ width: '45rem'}} className="flex flex-col items-start space-y-2 max-w-screen-md">
-                    <h2 className="text-xxl font-semibold">Welcome to MultiversX Peer Pact! <span style={{ color : 'red' }} >(TESTNET VERSION)</span></h2>
+                    <h2 className="text-xxl font-semibold">Welcome to MultiversX Peer Pact! </h2>
+                    <h2 style={{ color : 'red' }} >(TESTNET VERSION)</h2>
                     <h6 className="pb-2 text-base text-justify font-semibold">
                         Swap MultiversX ESDT Tokens by creating offers directly to peer wallets. All for FREE, only network fees apply.
                         Once created, offers by you and for you will appear on this page.
