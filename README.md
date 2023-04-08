@@ -1,4 +1,4 @@
-<img id="pic128540" width="150" height="100" 
+ <img id="pic128540" width="150" height="100" 
 src="/public/logos/LOGO_HD_Img.png" >
 
 ## Peer Pact Exchange dApp template 

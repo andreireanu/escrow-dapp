@@ -24,12 +24,6 @@ export const querySc = async (
             scAddress: address,
             args: args ?? [],
             value: value ?? "0"
-        },
-        {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-            },
         }
     );
 
