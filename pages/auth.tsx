@@ -10,9 +10,9 @@ import * as config from "../config";
 import QRCode from 'qrcode';
 import Image from 'next/image'
 
-const myLoader = ({ src } : { src : string}) => {
+const myLoader = ({ src }: { src: string }) => {
     return `/logos/${src}.png`
-  }
+}
 
 const Auth: NextPage = () => {
     const {authenticated, login, getLedgerAccounts} = useAuth();
@@ -54,9 +54,9 @@ const Auth: NextPage = () => {
     const extensionClickHandler = async () => {
         try {
             await login(AuthProviderType.EXTENSION);
-          } catch (error) {
+        } catch (error) {
             console.error(error);
-          }
+        }
     }
 
     const ledgerClickHandler = async () => {
@@ -75,16 +75,17 @@ const Auth: NextPage = () => {
                         font-family: 'Fira Sans Book';
                     }
                     `}
-                </style>
+        </style>
             <div className="flex flex-col items-center justify-center space-y-4 min-h-half-screen pt-16" style={{ minWidth: '47rem' }}>
                 <Image
-                        loader={myLoader}
-                        src = {'LOGO_HD'}
-                        width={350}
-                        height={248}
-                        />
+                    loader={myLoader}
+                    src={'LOGO_HD'}
+                    width={"350"}
+                    height={248} alt=""
+                    priority={true}
+                />
                 <h2 className="text-4xl text-center" style={{ width: '40rem' }}>
-                    Swap  ESDT Tokens for FREE!
+                    Swap ESDT Tokens for FREE!
                 </h2>
                 <h3 className="text-2xl text-center" style={{ width: '40rem' }}>
                     Please connect your wallet to use the MultiversX Peer Pact service
@@ -127,7 +128,7 @@ const Auth: NextPage = () => {
                         Ledger
                     </button> */}
                 </div>
-                <p className="text-2xl font-bold" style={{   color: 'red'}}>TESTNET VERSION</p>
+                <p className="text-2xl font-bold" style={{ color: 'red' }}>TESTNET VERSION</p>
                 {ledgerAccounts.length > 0 && <div className="flex items-center">
                     <span>Select ledger account</span>
                     <select
@@ -142,7 +143,7 @@ const Auth: NextPage = () => {
                 }
             </div>
             <MaiarLoginPopup qrCode={authQrCode} uri={maiarAuthUri} open={showPopup}
-                             setOpen={setIsPopupOpen}/>
+                setOpen={setIsPopupOpen} />
         </>
     );
 }

@@ -19,10 +19,5 @@ export default function RequiresAuth({children}: { children: any }) {
     if (authenticated) {
         return <>{children}</>
     }
-    return <div className="flex flex-column justify-center align-center items-center">   
-            <div className="mt-20 spinner-border animate-spin  block w-8 h-8 border-4 rounded-full" role="status">
-            </div>
-            <div>&nbsp;Loading</div>
-
-    </div>
+    return <div>Loading</div>
 };

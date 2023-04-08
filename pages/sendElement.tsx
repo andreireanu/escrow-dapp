@@ -1,13 +1,13 @@
 import React from 'react'
-import {Address} from "@elrondnetwork/erdjs/out"; 
-import {ContractFunction} from "@elrondnetwork/erdjs/out"; 
-import { AddressValue, BigUIntValue, TokenIdentifierValue } from "@elrondnetwork/erdjs/out";
+import { Address } from "@multiversx/sdk-core";
+import { ContractFunction } from "@multiversx/sdk-core";
+import { AddressValue, BigUIntValue, TokenIdentifierValue } from "@multiversx/sdk-core";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
 // import {useState} from "react";
 // import {webWalletTxReturnPath } from '../utils/routes';
-import {TransactionPayload} from "@elrondnetwork/erdjs/out";
+import { TransactionPayload } from "@multiversx/sdk-core";
 import {contractAddress} from "../config"; 
 import {tokens} from '../components/Tokens';
 import {chainId} from "../config"; 

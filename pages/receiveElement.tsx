@@ -1,5 +1,5 @@
 import React from 'react'
-import {Address} from "@elrondnetwork/erdjs/out"; 
+import { Address } from "@multiversx/sdk-core";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useTransaction} from "../hooks/useTransaction";
