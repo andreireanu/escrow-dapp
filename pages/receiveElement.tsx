@@ -53,9 +53,13 @@ function ReceiveElement( {record} : {record: String}) {
   };
 
   try {
+    console.log(record);
     const hex = Buffer.from(record, 'base64').toString('hex');
+    console.log("HERE");
+    console.log(hex);
     let regexConst = new RegExp(/0000000(?!0)./g);
     let splt = hex.replaceAll(regexConst, ',').split(','); 
+    console.log(splt);
     wallet_hex = splt[0];
     wallet = Address.fromString(wallet_hex).bech32()
     token_to_hex = splt[1]

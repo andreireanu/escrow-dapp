@@ -29,7 +29,7 @@ function GetTokens() {
           <div>
           <Card.Body>
             <Card.Title> Please claim 1 xEgld using this faucet: <a href="https://r3d4.fr/faucet">https://r3d4.fr/faucet</a> <br></br> Once you receive it claim the test tokens. You will receive 1,000,000 tokens of each of the following types:
-            PACTA-153996, PACTB-313c12, PACTC-f05a55, PACTD-febac3 and PACTE-1312db which you can use to test the dApp.  </Card.Title>
+              PACTA-83fe87, PACTB-9d4d2e, PACTC-f4bb04, PACTD-3482c3 and PACTE-3b1a89 which you can use to test the dApp.  </Card.Title>
             <Card.Text>
             </Card.Text>
           </Card.Body>

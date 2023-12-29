@@ -41,7 +41,9 @@ const Home: NextPage = () => {
             {
                 args: [new Address(address!).hex()],
                 outputType: "query",
-            });    
+            });  
+        console.log("DATA:");
+        console.log(data);  
         setDataSend([]);
         if (data.data.returnData) {
             data.data.returnData.map((record: any) => {
